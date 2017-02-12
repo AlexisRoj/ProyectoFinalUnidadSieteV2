@@ -82,13 +82,15 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="Ingresar"/>
+            android:id="@+id/btnIngLogin"
+            android:text="@string/ingresar"/>
 
         <Button
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:id="@+id/btnRegLogin"
             android:layout_height="match_parent"
-            android:text="Registrarse"/>
+            android:text="@string/registrarse"/>
 
     </LinearLayout>
 
