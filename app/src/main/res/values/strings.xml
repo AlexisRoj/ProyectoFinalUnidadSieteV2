@@ -9,6 +9,7 @@
     <string name="titleName">Control de Donaciones</string>
     <string name="ingresar">Ingresar</string>
     <string name="registrarse">Registrarse</string>
+    <string name="waiting">Por favor espere...</string>
 
 
 </resources>
