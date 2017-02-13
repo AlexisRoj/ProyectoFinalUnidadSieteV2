@@ -62,6 +62,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
 
         /** Cambia el titulo del login*/
         this.setTitle(getString(R.string.titleName));
+
+
+        try {
+            new ConsultarLoginAsync(this).execute(new URL("http://192.168.100.4:8080/WebServiceExamenSiete/webapi/Users"));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error en la tarea asíncrona", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     @Override

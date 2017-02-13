@@ -70,7 +70,7 @@ public class ConsultarLoginAsync extends AsyncTask<URL,Integer,String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        dialog.setMessage(activity.getString(R.string.waiting));
+        dialog.setMessage("Espere por favor...");
     }
 
     @Override
