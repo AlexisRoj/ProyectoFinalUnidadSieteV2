@@ -24,9 +24,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
     private TextInputLayout textInputUserName;
     private TextInputLayout textInputUserPass;
 
-    private int id_comparar;
+    private String id_comparar;
     private String username_comparar;
-    private String user_pass_comparar;
+    private String userpass_comparar;
 
 
     @Override
@@ -64,12 +64,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
         this.setTitle(getString(R.string.titleName));
 
 
-        try {
-            new ConsultarLoginAsync(this).execute(new URL("http://192.168.100.4:8080/WebServiceExamenSiete/webapi/Users"));
+   /*     try {
+            new ConsultarLoginAsync(this).execute(new URL("http://192.168.100.4:8080/WebServiceExamenSiete/webapi/Users/"));
         } catch (MalformedURLException e) {
             e.printStackTrace();
             Toast.makeText(this, "Error en la tarea asíncrona", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
 
     }
@@ -108,12 +108,17 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
                 if (conectar) {
                     /** Primero crea la conexion al servicio */
                     try {
-                        new ConsultarLoginAsync(this).execute( new URL("http://192.168.100.4:3306/WebServiceExamenSiete/webapi/Users/"
+                        new ConsultarLoginAsync(this).execute( new URL("http://192.168.100.4:8080/WebServiceExamenSiete/webapi/Users/"
                         + user_name) );
 
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
+
+                    if (user_name == username_comparar){
+                        Toast.makeText(this,"son iguales",Toast.LENGTH_SHORT).show();
+                    }else
+                        Toast.makeText(this,username_comparar,Toast.LENGTH_SHORT).show();
 
 
                 } else
@@ -135,8 +140,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
 
     @Override
     public void onConsultarUsuarioGetFinish(String id, String Username, String Userpass) {
-        //id_comparar = id;
-        user_pass_comparar = Username;
-        user_pass_comparar = Userpass;
+        id_comparar = id;
+        username_comparar = Username;
+        userpass_comparar = Userpass;
     }
 }

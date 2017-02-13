@@ -9,6 +9,7 @@ import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -83,14 +84,16 @@ public class ConsultarLoginAsync extends AsyncTask<URL,Integer,String> {
         String userpass = "";
 
         try {
-            JSONArray jsonArray = new JSONArray(s);
+            JSONObject jsonObject = new JSONObject(s);
 
             /** Extrae los datos del json*/
-            id = jsonArray.getJSONObject(0).getString("user_id");
-            username = jsonArray.getJSONObject(0).getString("user_name");
-            userpass = jsonArray.getJSONObject(0).getString("user_pass");
 
-            Toast.makeText(activity,id+username+userpass,Toast.LENGTH_SHORT).show();
+                id = jsonObject.getString("user_id");
+                username = jsonObject.getString("user_name");
+                userpass = jsonObject.getString("user_pass");
+
+                Toast.makeText(activity, id + username + userpass, Toast.LENGTH_SHORT).show();
+
 
         } catch (JSONException e) {
             e.printStackTrace();
