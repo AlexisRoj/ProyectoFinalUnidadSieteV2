@@ -1,5 +1,6 @@
 package com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.Preference;
 import android.support.design.widget.TextInputLayout;
@@ -11,23 +12,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.dialogos.DialogoCrearUsuario;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.login_async.ConsultarLoginAsync;
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.login_async.ConsultarUserAsync;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.preference.PreferenceConstant;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
 public class Login extends AppCompatActivity implements View.OnClickListener,
-        ConsultarLoginAsync.OnConsultarUsuarioGetAsync {
+        ConsultarLoginAsync.OnConsultarUsuarioGetAsync, DialogoCrearUsuario.OnInsertarUserListener
+, ConsultarUserAsync.OnIfExistUser{
 
     public String user_name;
     private String user_pass;
     private TextInputLayout textInputUserName;
     private TextInputLayout textInputUserPass;
-
-    private String id_comparar;
-    private String username_comparar;
-    private String userpass_comparar;
 
 
     @Override
@@ -65,11 +65,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
 
         /** Validacion de existencia del sharepreference*/
         if (user_name != null && user_pass != null) {
-            toolbar.setTitle(getText(R.string.titleName));
+
         }
 
         /** Cambia el titulo del login*/
 
+        toolbar.setTitle(getText(R.string.titleName));
 
     }
 
@@ -119,6 +120,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
             }
 
             case R.id.btnRegLogin: {
+                DialogoCrearUsuario dialogo = new DialogoCrearUsuario();
+                dialogo.show(getSupportFragmentManager(), DialogoCrearUsuario.TAG);
                 break;
             }
 
@@ -130,13 +133,53 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
      * Variables que atrapan los datos que vienen del query
      */
 
+
+
+
     @Override
-    public void onConsultarUsuarioGetFinish(String id, String Username, String Userpass) {
+    public void onConsultarUsuarioGetFinish(String id, String Username) {
 
 
         if (user_name != null)
-            Toast.makeText(this, "Loteria", Toast.LENGTH_SHORT).show();
+            cargarActivity();
+            //Toast.makeText(this, "Loteria", Toast.LENGTH_SHORT).show();
     }
 
+    private void cargarActivity() {
+        Intent intent = new Intent(Login.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
+    private String usernameInsertar;
+    private String userpassInsertar;
+
+    @Override
+    public void InsertarUser(String username, String userpass) {
+
+
+        usernameInsertar = username;
+        userpassInsertar = userpass;
+
+        try {
+            new ConsultarUserAsync(this).execute(new URL("http://192.168.100.2:8080/WebServiceExamenSiete/webapi/Users/"
+                    + username));} catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    @Override
+    public void OnIfExistUserGetFinish(Boolean username) {
+
+        if (username) {
+            Toast.makeText(this, "El nombre usuario ingresado " +
+                    "ya existe, favor ingresar un nombre distinto", Toast.LENGTH_LONG).show();
+        } else {
+
+            Toast.makeText(this, usernameInsertar + userpassInsertar, Toast.LENGTH_SHORT).show();
+        }
+
+    }
 }

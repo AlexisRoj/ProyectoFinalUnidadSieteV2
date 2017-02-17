@@ -54,7 +54,7 @@ public class ConsultarLoginAsync extends AsyncTask<URL, Integer, String> {
         /**
          * Interface que envia los datos del login
          */
-        void onConsultarUsuarioGetFinish(String id, String Username, String Userpass);
+        void onConsultarUsuarioGetFinish(String id, String Username);
     }
 
     private OnConsultarUsuarioGetAsync listener;
@@ -82,17 +82,9 @@ public class ConsultarLoginAsync extends AsyncTask<URL, Integer, String> {
     }
 
 
-    /**
-     * Parametros pasados al activity
-     */
-    private String id = "";
-    private String username = "";
-    private String userpass = "";
-
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-
 
         if (s != null) {
             /** Si s es null no consulta el json dado que la contraseña no es valida*/
@@ -101,13 +93,10 @@ public class ConsultarLoginAsync extends AsyncTask<URL, Integer, String> {
 
                 /** Extrae los datos del json*/
 
-                id = jsonObject.getString("user_id");
-                username = jsonObject.getString("user_name");
-                userpass = jsonObject.getString("user_pass");
-
-                //Toast.makeText(activity, id + username + userpass, Toast.LENGTH_SHORT).show();
-                listener.onConsultarUsuarioGetFinish(id, username, userpass);
-
+                /** Parametros pasados al activity */
+                String id = jsonObject.getString("user_id");
+                String username = jsonObject.getString("user_name");
+                listener.onConsultarUsuarioGetFinish(id, username);
 
             } catch (JSONException e) {
                 e.printStackTrace();

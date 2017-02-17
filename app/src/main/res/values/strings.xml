@@ -11,6 +11,12 @@
     <string name="registrarse">Registrarse</string>
     <string name="waiting">Por favor espere...</string>
     <string name="errorLogin">El nombre de usuario o contrseña no son validos, vuelva a intentarlo</string>
+    <string name="crear_usuario">Crear nuevo usuario</string>
+    <string name="nombre_de_usuario">Nombre de usuario</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="repetir_contrasena">Repetir contraseña</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="crear_user">Crear usuario</string>
 
 
 </resources>
