@@ -3,11 +3,15 @@ package com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.login_as
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.Login;
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.MainActivity;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.R;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,7 +26,7 @@ import java.net.URL;
  * Created by alexi on 13/02/2017.
  */
 
-public class ConsultarLoginAsync extends AsyncTask<URL,Integer,String> {
+public class ConsultarLoginAsync extends AsyncTask<URL, Integer, String> {
 
     @Override
     protected String doInBackground(URL... params) {
@@ -37,7 +41,7 @@ public class ConsultarLoginAsync extends AsyncTask<URL,Integer,String> {
 
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             assert connection != null;
             connection.disconnect();
         }
@@ -46,8 +50,10 @@ public class ConsultarLoginAsync extends AsyncTask<URL,Integer,String> {
     }
 
 
-    public interface OnConsultarUsuarioGetAsync{
-        /** Interface que envia los datos del login*/
+    public interface OnConsultarUsuarioGetAsync {
+        /**
+         * Interface que envia los datos del login
+         */
         void onConsultarUsuarioGetFinish(String id, String Username, String Userpass);
     }
 
@@ -63,10 +69,11 @@ public class ConsultarLoginAsync extends AsyncTask<URL,Integer,String> {
 
         try {
             listener = (OnConsultarUsuarioGetAsync) activity;
-        }catch (ClassCastException e){
+        } catch (ClassCastException e) {
             throw new ClassCastException("La activity no implementa la interfaz consultar usuario");
         }
     }
+
 
     @Override
     protected void onPreExecute() {
@@ -74,38 +81,47 @@ public class ConsultarLoginAsync extends AsyncTask<URL,Integer,String> {
         dialog.setMessage("Espere por favor...");
     }
 
+
+    /**
+     * Parametros pasados al activity
+     */
+    private String id = "";
+    private String username = "";
+    private String userpass = "";
+
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
 
-        /** Parametros pasados al activity*/
-        String id = "";
-        String username = "";
-        String userpass = "";
 
-        try {
-            JSONObject jsonObject = new JSONObject(s);
+        if (s != null) {
+            /** Si s es null no consulta el json dado que la contraseña no es valida*/
+            try {
+                JSONObject jsonObject = new JSONObject(s);
 
-            /** Extrae los datos del json*/
+                /** Extrae los datos del json*/
 
                 id = jsonObject.getString("user_id");
                 username = jsonObject.getString("user_name");
                 userpass = jsonObject.getString("user_pass");
 
-                Toast.makeText(activity, id + username + userpass, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(activity, id + username + userpass, Toast.LENGTH_SHORT).show();
+                listener.onConsultarUsuarioGetFinish(id, username, userpass);
 
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Toast.makeText(activity, "Error al decodificar json respuesta", Toast.LENGTH_SHORT).show();
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Toast.makeText(activity, "Error al decodificar json respuesta", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            /** Error de contraseña*/
+            Toast.makeText(activity, R.string.errorLogin, Toast.LENGTH_SHORT).show();
         }
 
-        /** Envia los datos al activity*/
-        listener.onConsultarUsuarioGetFinish(id,username,userpass);
-
-        if (dialog.isShowing()){
+        if (dialog.isShowing()) {
             dialog.dismiss();
         }
 
     }
+
 }

@@ -5,6 +5,7 @@ import android.preference.Preference;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,7 +20,7 @@ import java.net.URL;
 public class Login extends AppCompatActivity implements View.OnClickListener,
         ConsultarLoginAsync.OnConsultarUsuarioGetAsync {
 
-    private String user_name;
+    public String user_name;
     private String user_pass;
     private TextInputLayout textInputUserName;
     private TextInputLayout textInputUserPass;
@@ -34,6 +35,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+        /** Seccion del toolbar*/
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
+
+
+        /** Crea variable de preferencias*/
         SharedPreferences preferences =
                 getSharedPreferences(PreferenceConstant.PREFERENCE_LOGIN, MODE_PRIVATE);
 
@@ -56,26 +65,17 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
 
         /** Validacion de existencia del sharepreference*/
         if (user_name != null && user_pass != null) {
-
-
+            toolbar.setTitle(getText(R.string.titleName));
         }
 
         /** Cambia el titulo del login*/
-        this.setTitle(getString(R.string.titleName));
-
-
-   /*     try {
-            new ConsultarLoginAsync(this).execute(new URL("http://192.168.100.4:8080/WebServiceExamenSiete/webapi/Users/"));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Error en la tarea asíncrona", Toast.LENGTH_SHORT).show();
-        }*/
 
 
     }
 
     @Override
     public void onClick(View v) {
+        /** Selecion de Boton*/
 
         int identificador = v.getId();
 
@@ -99,31 +99,22 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
 
                 Boolean conectar = true;
 
-                if ("".equals(user_name))
+/*                if ("".equals(user_name))
                     conectar = false;
 
                 if ("".equals(user_pass))
-                    conectar = false;
+                    conectar = false;*/
 
                 if (conectar) {
                     /** Primero crea la conexion al servicio */
                     try {
-                        new ConsultarLoginAsync(this).execute( new URL("http://192.168.100.4:8080/WebServiceExamenSiete/webapi/Users/"
-                        + user_name) );
-
+                        new ConsultarLoginAsync(this).execute(new URL("http://192.168.100.2:8080/WebServiceExamenSiete/webapi/Users/"
+                                + user_name + "/" + user_pass));
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
-
-                    if (user_name == username_comparar){
-                        Toast.makeText(this,"son iguales",Toast.LENGTH_SHORT).show();
-                    }else
-                        Toast.makeText(this,username_comparar,Toast.LENGTH_SHORT).show();
-
-
                 } else
                     Toast.makeText(this, "No pueden haber campos vacios", Toast.LENGTH_SHORT).show();
-
                 break;
             }
 
@@ -135,13 +126,17 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
 
     }
 
-    /** Variables que atrapan los datos que vienen del query*/
-
+    /**
+     * Variables que atrapan los datos que vienen del query
+     */
 
     @Override
     public void onConsultarUsuarioGetFinish(String id, String Username, String Userpass) {
-        id_comparar = id;
-        username_comparar = Username;
-        userpass_comparar = Userpass;
+
+
+        if (user_name != null)
+            Toast.makeText(this, "Loteria", Toast.LENGTH_SHORT).show();
     }
+
+
 }

@@ -10,6 +10,7 @@
     <string name="ingresar">Ingresar</string>
     <string name="registrarse">Registrarse</string>
     <string name="waiting">Por favor espere...</string>
+    <string name="errorLogin">El nombre de usuario o contrseña no son validos, vuelva a intentarlo</string>
 
 
 </resources>
