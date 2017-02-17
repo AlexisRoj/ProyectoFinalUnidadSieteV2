@@ -21,10 +21,15 @@ public class InsertarLoginAsync extends AsyncTask<URL, Integer, Boolean> {
 
     private ProgressDialog dialogo;
     private Activity activity;
+    private String username;
+    private String userpass;
 
-    public InsertarLoginAsync(Activity activity) {
+    public InsertarLoginAsync(Activity activity, String username,
+                              String userpass) {
         dialogo = new ProgressDialog(activity);
         this.activity = activity;
+        this.username = username;
+        this.userpass = userpass;
 
 
     }
@@ -38,13 +43,10 @@ public class InsertarLoginAsync extends AsyncTask<URL, Integer, Boolean> {
 
             JSONObject datos = new JSONObject();
             /** Trae los datos del activity*/
-      /*      Login login = new Login();
 
-            String user, pass;
-            user = login.getUsernameInsertar();
-            pass = login.getUserpassInsertar();*/
+
             /**Inserta los datos en la tabla*/
-            datos.put("user_name", "user").put("user_pass2", "pass2");
+            datos.put("user_name", username).put("user_pass", userpass);
             connection = (HttpURLConnection) params[0].openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json;charset=utf-8");
