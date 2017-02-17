@@ -26,7 +26,7 @@ public class DialogoCrearUsuario extends DialogFragment {
 
     public interface OnInsertarUserListener {
 
-        void InsertarUser(String username, String userpass);
+        void DialogInsertUser(String username, String userpass);
     }
 
     private OnInsertarUserListener listener;
@@ -62,7 +62,7 @@ public class DialogoCrearUsuario extends DialogFragment {
                 final String passUser1 = passUsuario1.getText().toString();
                 final String passUser2 = passUsuario2.getText().toString();
 
-                listener.InsertarUser(nombUser,passUser1);
+                listener.DialogInsertUser(nombUser,passUser1);
             }
         });
 

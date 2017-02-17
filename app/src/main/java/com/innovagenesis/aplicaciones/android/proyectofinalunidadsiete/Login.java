@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.dialogos.DialogoCrearUsuario;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.login_async.ConsultarLoginAsync;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.login_async.ConsultarUserAsync;
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.login_async.InsertarLoginAsync;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.preference.PreferenceConstant;
 
 import java.net.MalformedURLException;
@@ -22,7 +23,7 @@ import java.net.URL;
 
 public class Login extends AppCompatActivity implements View.OnClickListener,
         ConsultarLoginAsync.OnConsultarUsuarioGetAsync, DialogoCrearUsuario.OnInsertarUserListener
-, ConsultarUserAsync.OnIfExistUser{
+        , ConsultarUserAsync.OnIfExistUser {
 
     public String user_name;
     private String user_pass;
@@ -133,16 +134,18 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
      * Variables que atrapan los datos que vienen del query
      */
 
-
-
+    /**********************************************************************************************/
+    /**
+     * Ingreso al sistema
+     */
 
     @Override
     public void onConsultarUsuarioGetFinish(String id, String Username) {
 
 
-        if (user_name != null)
+        if (Username != null)
             cargarActivity();
-            //Toast.makeText(this, "Loteria", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Loteria", Toast.LENGTH_SHORT).show();
     }
 
     private void cargarActivity() {
@@ -151,23 +154,23 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
         finish();
     }
 
+    /**********************************************************************************************/
+
     private String usernameInsertar;
     private String userpassInsertar;
 
     @Override
-    public void InsertarUser(String username, String userpass) {
-
+    public void DialogInsertUser(String username, String userpass) {
 
         usernameInsertar = username;
         userpassInsertar = userpass;
 
         try {
             new ConsultarUserAsync(this).execute(new URL("http://192.168.100.2:8080/WebServiceExamenSiete/webapi/Users/"
-                    + username));} catch (MalformedURLException e) {
+                    + username));
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-
-
     }
 
     @Override
@@ -178,8 +181,36 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
                     "ya existe, favor ingresar un nombre distinto", Toast.LENGTH_LONG).show();
         } else {
 
-            Toast.makeText(this, usernameInsertar + userpassInsertar, Toast.LENGTH_SHORT).show();
+            try {
+                new InsertarLoginAsync(this).execute(new URL("http://192.168.100.2:8080/WebServiceExamenSiete/webapi/Users"));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                Toast.makeText(Login.this, "Ha ocurrido un error durante la petición", Toast.LENGTH_SHORT).show();
+            }
+
+            //Toast.makeText(this, usernameInsertar + userpassInsertar, Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+
+    /**
+     * Getter & Setter que pasan los datos para ingresar el usuario
+     */
+
+    public String getUsernameInsertar() {
+        return usernameInsertar;
+    }
+
+    public void setUsernameInsertar(String usernameInsertar) {
+        this.usernameInsertar = usernameInsertar;
+    }
+
+    public String getUserpassInsertar() {
+        return userpassInsertar;
+    }
+
+    public void setUserpassInsertar(String userpassInsertar) {
+        this.userpassInsertar = userpassInsertar;
     }
 }
