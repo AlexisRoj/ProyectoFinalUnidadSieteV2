@@ -17,6 +17,12 @@
     <string name="repetir_contrasena">Repetir contraseña</string>
     <string name="cancelar">Cancelar</string>
     <string name="crear_user">Crear usuario</string>
+    <string name="close_seccion">Cerrar sección</string>
+    <string name="eliminarCuenta">Eliminar cuenta</string>
+    <string name="cambiar_contrasena">Cambiar contraseña</string>
+    <string name="contrasena_actual">Contraseña Actual</string>
+    <string name="nueva_contrasena">Nueva contraseña</string>
+    <string name="guardar">Guardar</string>
 
 
 </resources>

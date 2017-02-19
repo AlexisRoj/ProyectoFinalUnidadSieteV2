@@ -1,15 +1,10 @@
-package com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.login_async;
+package com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_users_async;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.support.v4.app.Fragment;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.Login;
-import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.MainActivity;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.R;
 
 import org.json.JSONException;
@@ -22,7 +17,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Consulta el usuario para realizar el ingreso al sistema
+ * Consulta el usuario para realizar el ingreso/update/delete al sistema
  * Created by alexi on 13/02/2017.
  */
 
@@ -54,7 +49,7 @@ public class ConsultarLoginAsync extends AsyncTask<URL, Integer, String> {
         /**
          * Interface que envia los datos del login
          */
-        void onConsultarUsuarioGetFinish(String id, String Username);
+        void onConsultarUsuarioGetFinish(String id, String Username, String Userpass);
     }
 
     private OnConsultarUsuarioGetAsync listener;
@@ -96,7 +91,8 @@ public class ConsultarLoginAsync extends AsyncTask<URL, Integer, String> {
                 /** Parametros pasados al activity */
                 String id = jsonObject.getString("user_id");
                 String username = jsonObject.getString("user_name");
-                listener.onConsultarUsuarioGetFinish(id, username);
+                String userpass = jsonObject.getString("user_pass");
+                listener.onConsultarUsuarioGetFinish(id, username,userpass);
 
             } catch (JSONException e) {
                 e.printStackTrace();

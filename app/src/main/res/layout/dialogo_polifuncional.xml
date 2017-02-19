@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/dialogoTitulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -18,7 +18,7 @@
         android:textSize="24sp" />
 
     <EditText
-        android:id="@+id/etNewUsername"
+        android:id="@+id/dialogoCampo1"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/etNewUserpass"
+        android:id="@+id/dialogoCampo2"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_width="match_parent"
@@ -38,7 +38,7 @@
         android:inputType="textPassword" />
 
     <EditText
-        android:id="@+id/etNewUserpass2"
+        android:id="@+id/dialogoCampo3"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_width="match_parent"
@@ -57,14 +57,14 @@
         android:layout_marginBottom="15dp">
 
         <Button
-            android:id="@+id/btnReg"
+            android:id="@+id/dialogoBtnReg"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="@string/registrarse" />
 
         <Button
-            android:id="@+id/btnCancel"
+            android:id="@+id/dialogoBtnCancel"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"

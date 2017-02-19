@@ -2,54 +2,61 @@ package com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.Preference;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.dialogos.DialogoCrearUsuario;
-import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.login_async.ConsultarLoginAsync;
-import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.login_async.ConsultarUserAsync;
-import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.login_async.InsertarLoginAsync;
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_users_async.ConsultarLoginAsync;
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_users_async.ConsultarUserAsync;
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_users_async.InsertarLoginAsync;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.preference.PreferenceConstant;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
+
+
+
 public class Login extends AppCompatActivity implements View.OnClickListener,
         ConsultarLoginAsync.OnConsultarUsuarioGetAsync, DialogoCrearUsuario.OnInsertarUserListener
         , ConsultarUserAsync.OnIfExistUser {
 
-    public String user_name;
+    private String user_name;
     private String user_pass;
     private TextInputLayout textInputUserName;
     private TextInputLayout textInputUserPass;
 
+    /**
+     * Preference
+     */
+    private SharedPreferences pref;
+    private CheckBox checkBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
         /** Seccion del toolbar*/
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
 
-
         /** Crea variable de preferencias*/
-        SharedPreferences preferences =
-                getSharedPreferences(PreferenceConstant.PREFERENCE_LOGIN, MODE_PRIVATE);
+        pref = getSharedPreferences(PreferenceConstant.PREFERENCE_LOGIN, MODE_PRIVATE);
 
         /** Cargar preferencias para hacer el login*/
-        user_name = preferences.getString(PreferenceConstant.USER_NAME, null);
-        user_pass = preferences.getString(PreferenceConstant.USER_PASS, null);
+        user_name = pref.getString(PreferenceConstant.USER_NAME, null);
+        user_pass = pref.getString(PreferenceConstant.USER_PASS, null);
 
         /** Castea y Activa los botones*/
 
@@ -64,15 +71,39 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
         textInputUserName = (TextInputLayout) findViewById(R.id.user_name);
         textInputUserPass = (TextInputLayout) findViewById(R.id.user_pass);
 
+        /** Checkbox*/
+        checkBox = (CheckBox) findViewById(R.id.checkbox);
+
         /** Validacion de existencia del sharepreference*/
         if (user_name != null && user_pass != null) {
+            /**
+             *
+             *   VALIDACION DE PREFERENCE
+             *
+             * */
 
+            /** Valida las preferencias y si existen, envia el dato almacenado a comparar
+             * para hacer login */
+            try {
+                new ConsultarLoginAsync(this).execute(
+                        new URL(PreferenceConstant.SERVERUSER
+                        + user_name + "/" + user_pass));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
         }
-
         /** Cambia el titulo del login*/
-
         toolbar.setTitle(getText(R.string.titleName));
+        /** Action Button*/
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 
     @Override
@@ -82,10 +113,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
         int identificador = v.getId();
 
         switch (identificador) {
-
             case R.id.btnIngLogin: {
                 /** captura los datos si no estan en la preference*/
-
                 EditText editTextUserName = textInputUserName.getEditText();
                 EditText editTextUserPass = textInputUserPass.getEditText();
 
@@ -93,24 +122,23 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
                     assert editTextUserName != null;
                     user_name = editTextUserName.getText().toString();
                 }
-
                 if (textInputUserPass.getEditText() != null) {
                     assert editTextUserPass != null;
                     user_pass = editTextUserPass.getText().toString();
                 }
-
                 Boolean conectar = true;
 
-/*                if ("".equals(user_name))
+                if ("".equals(user_name))
                     conectar = false;
 
                 if ("".equals(user_pass))
-                    conectar = false;*/
+                    conectar = false;
 
                 if (conectar) {
                     /** Primero crea la conexion al servicio */
                     try {
-                        new ConsultarLoginAsync(this).execute(new URL("http://192.168.100.2:8080/WebServiceExamenSiete/webapi/Users/"
+                        new ConsultarLoginAsync(this).execute(new
+                                URL(PreferenceConstant.SERVERUSER
                                 + user_name + "/" + user_pass));
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
@@ -125,14 +153,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
                 dialogo.show(getSupportFragmentManager(), DialogoCrearUsuario.TAG);
                 break;
             }
-
         }
-
     }
-
-    /**
-     * Variables que atrapan los datos que vienen del query
-     */
 
     /**********************************************************************************************/
     /**
@@ -140,12 +162,21 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
      */
 
     @Override
-    public void onConsultarUsuarioGetFinish(String id, String Username) {
+    public void onConsultarUsuarioGetFinish(String id, String Username, String Userpass) {
 
+        SharedPreferences.Editor edit = pref.edit();
 
-        if (Username != null)
-            cargarActivity();
-        //Toast.makeText(this, "Loteria", Toast.LENGTH_SHORT).show();
+        if (Username != null) {
+            if (checkBox.isChecked()) {
+                /** Salva la preferencia*/
+
+                edit.putString(PreferenceConstant.USER_NAME, user_name);
+                edit.putString(PreferenceConstant.USER_PASS, user_pass);
+                edit.apply();
+                cargarActivity();
+            } else
+                cargarActivity();
+        }
     }
 
     private void cargarActivity() {
@@ -155,7 +186,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
     }
 
     /**********************************************************************************************/
-
+    /**
+     * Usuario nuevo
+     */
     private String usernameInsertar;
     private String userpassInsertar;
 
@@ -166,7 +199,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
         userpassInsertar = userpass;
 
         try {
-            new ConsultarUserAsync(this).execute(new URL("http://192.168.100.2:8080/WebServiceExamenSiete/webapi/Users/"
+            new ConsultarUserAsync(this).execute(
+                    new URL(PreferenceConstant.SERVERUSER
                     + username));
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -176,41 +210,29 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
     @Override
     public void OnIfExistUserGetFinish(Boolean username) {
 
+        /** Si regresa */
+
         if (username) {
             Toast.makeText(this, "El nombre usuario ingresado " +
                     "ya existe, favor ingresar un nombre distinto", Toast.LENGTH_LONG).show();
         } else {
 
             try {
-                new InsertarLoginAsync(this,usernameInsertar,userpassInsertar).execute(new URL("http://192.168.100.2:8080/WebServiceExamenSiete/webapi/Users"));
+                /** Ingresa el usuario y carga la activity*/
+                new InsertarLoginAsync(this, usernameInsertar, userpassInsertar)
+                        .execute(new
+                                URL(PreferenceConstant.SERVERUSER));
+                cargarActivity();
             } catch (MalformedURLException e) {
                 e.printStackTrace();
-                Toast.makeText(Login.this, "Ha ocurrido un error durante la petición", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Login.this,
+                        "Ha ocurrido un error durante la petición", Toast.LENGTH_SHORT).show();
             }
 
-            //Toast.makeText(this, usernameInsertar + userpassInsertar, Toast.LENGTH_SHORT).show();
+
         }
 
     }
 
 
-    /**
-     * Getter & Setter que pasan los datos para ingresar el usuario
-     */
-
-    public String getUsernameInsertar() {
-        return usernameInsertar;
-    }
-
-    public void setUsernameInsertar(String usernameInsertar) {
-        this.usernameInsertar = usernameInsertar;
-    }
-
-    public String getUserpassInsertar() {
-        return userpassInsertar;
-    }
-
-    public void setUserpassInsertar(String userpassInsertar) {
-        this.userpassInsertar = userpassInsertar;
-    }
 }

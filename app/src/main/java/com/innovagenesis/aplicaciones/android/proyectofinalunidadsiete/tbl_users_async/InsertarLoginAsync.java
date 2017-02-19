@@ -1,10 +1,9 @@
-package com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.login_async;
+package com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_users_async;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.widget.Toast;
-import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.Login;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
@@ -26,25 +25,20 @@ public class InsertarLoginAsync extends AsyncTask<URL, Integer, Boolean> {
 
     public InsertarLoginAsync(Activity activity, String username,
                               String userpass) {
+        /**Constructor, recibe los parametros del dialog*/
         dialogo = new ProgressDialog(activity);
         this.activity = activity;
         this.username = username;
         this.userpass = userpass;
-
-
     }
 
     @Override
     protected Boolean doInBackground(URL... params) {
 
         HttpURLConnection connection = null;
-
         try {
-
             JSONObject datos = new JSONObject();
             /** Trae los datos del activity*/
-
-
             /**Inserta los datos en la tabla*/
             datos.put("user_name", username).put("user_pass", userpass);
             connection = (HttpURLConnection) params[0].openConnection();
@@ -79,7 +73,10 @@ public class InsertarLoginAsync extends AsyncTask<URL, Integer, Boolean> {
     protected void onPostExecute(Boolean bool) {
         super.onPostExecute(bool);
 
-        if (bool) Toast.makeText(activity, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show();
+        if (bool){
+            Toast.makeText(activity, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show();
+            activity.closeContextMenu();
+        }
 
         if (dialogo.isShowing())dialogo.dismiss();
     }

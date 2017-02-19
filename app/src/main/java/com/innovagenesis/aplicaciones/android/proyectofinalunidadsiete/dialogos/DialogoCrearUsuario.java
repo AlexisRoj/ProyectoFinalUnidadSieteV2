@@ -10,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.R;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.R;
 
 
 /**
@@ -36,23 +38,32 @@ public class DialogoCrearUsuario extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View view = LayoutInflater.from(getContext())
-                .inflate(R.layout.dialogo_crear_user, null);
+                .inflate(R.layout.dialogo_polifuncional, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setView(view);
 
         /** Edit Text del Dialogo*/
-        final EditText nombreUsuario = (EditText) view.findViewById(R.id.etNewUsername);
-        final EditText passUsuario1 = (EditText) view.findViewById(R.id.etNewUserpass);
-        final EditText passUsuario2 = (EditText) view.findViewById(R.id.etNewUserpass2);
+        TextView textView = (TextView)view.findViewById(R.id.dialogoTitulo);
+
+        final EditText nombreUsuario = (EditText) view.findViewById(R.id.dialogoCampo1);
+        final EditText passUsuario1 = (EditText) view.findViewById(R.id.dialogoCampo2);
+        final EditText passUsuario2 = (EditText) view.findViewById(R.id.dialogoCampo3);
+
+
         /** Botones del Dialogo*/
-        Button btnLogin = (Button) view.findViewById(R.id.btnReg);
-        Button btnCancel = (Button) view.findViewById(R.id.btnCancel);
+        Button btnLogin = (Button) view.findViewById(R.id.dialogoBtnReg);
+        Button btnCancel = (Button) view.findViewById(R.id.dialogoBtnCancel);
 
+        /** Cambiando propiedades*/
 
+        textView.setText(getString(R.string.crear_user));
+
+        nombreUsuario.setHint(getString(R.string.nombre_de_usuario));
+        passUsuario1.setHint(getString(R.string.contrasena));
+        passUsuario2.setHint(getString(R.string.repetir_contrasena));
 
 
         /** Falta los controles y las validaciones de los datos*/
-
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +73,10 @@ public class DialogoCrearUsuario extends DialogFragment {
                 final String passUser1 = passUsuario1.getText().toString();
                 final String passUser2 = passUsuario2.getText().toString();
 
-                listener.DialogInsertUser(nombUser,passUser1);
+                if (passUser1.equals(passUser2)) {
+                    listener.DialogInsertUser(nombUser, passUser1);
+                } else
+                   Toast.makeText(getContext(), "No coinciden las contraseñas", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -75,6 +89,7 @@ public class DialogoCrearUsuario extends DialogFragment {
 
         return builder.create();
     }
+
 
     @Override
     public void onAttach(Context context) {

@@ -2,9 +2,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.MainActivity">
+
+
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_cambiarPass"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/cambiar_contrasena"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_eliminar_cuenta"
+        android:orderInCategory="100"
+        android:title="@string/eliminarCuenta"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_close_pref"
+        android:orderInCategory="100"
+        android:title="@string/close_seccion"
+        app:showAsAction="never" />
+
+
+
 </menu>
