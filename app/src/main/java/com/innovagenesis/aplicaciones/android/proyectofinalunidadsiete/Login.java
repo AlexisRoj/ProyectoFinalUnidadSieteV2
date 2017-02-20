@@ -32,6 +32,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
 
     private String user_name;
     private String user_pass;
+    private String user_pref;
     private TextInputLayout textInputUserName;
     private TextInputLayout textInputUserPass;
 
@@ -57,6 +58,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
         /** Cargar preferencias para hacer el login*/
         user_name = pref.getString(PreferenceConstant.USER_NAME, null);
         user_pass = pref.getString(PreferenceConstant.USER_PASS, null);
+        user_pref = pref.getString(PreferenceConstant.USER_PREF, null);
 
         /** Castea y Activa los botones*/
 
@@ -75,7 +77,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
         checkBox = (CheckBox) findViewById(R.id.checkbox);
 
         /** Validacion de existencia del sharepreference*/
-        if (user_name != null && user_pass != null) {
+        if (user_name != null && user_pass != null && user_pref != null) {
             /**
              *
              *   VALIDACION DE PREFERENCE
@@ -172,9 +174,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
 
                 edit.putString(PreferenceConstant.USER_NAME, user_name);
                 edit.putString(PreferenceConstant.USER_PASS, user_pass);
+                edit.putString(PreferenceConstant.USER_PREF, "Activa");
                 edit.apply();
                 cargarActivity();
             } else
+                edit.putString(PreferenceConstant.USER_NAME, user_name);
+                edit.putString(PreferenceConstant.USER_PASS, user_pass);
+                edit.apply();
                 cargarActivity();
         }
     }

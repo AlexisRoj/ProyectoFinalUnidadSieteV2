@@ -64,8 +64,8 @@ public class DialogoCambiarContrasena extends DialogFragment {
 
         textView.setText(getString(R.string.cambiar_contrasena));
 
-        oontrasenaActual.setHint(getString(R.string.nombre_de_usuario));
-        nuevaContrasena.setHint(getString(R.string.contrasena));
+        oontrasenaActual.setHint(getString(R.string.contrasena_actual));
+        nuevaContrasena.setHint(getString(R.string.nueva_contrasena));
         RepitaContrasena.setHint(getString(R.string.repetir_contrasena));
 
         btnUno.setText(getString(R.string.guardar));

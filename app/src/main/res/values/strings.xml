@@ -23,6 +23,9 @@
     <string name="contrasena_actual">Contraseña Actual</string>
     <string name="nueva_contrasena">Nueva contraseña</string>
     <string name="guardar">Guardar</string>
+    <string name="mensajeEliminarCuenta">¿Realmente desea eliminar su cuenta?</string>
+    <string name="aceptar">aceptar</string>
+    <string name="userDelete">Usuario ha sido eliminado</string>
 
 
 </resources>

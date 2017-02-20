@@ -10,6 +10,7 @@ public class PreferenceConstant {
     public static final String PREFERENCE_LOGIN = "Inicio de Sección";
     public static final String USER_NAME = "Nombre de usuario";
     public static final String USER_PASS = "Clave";
+    public static final String USER_PREF = "false";
     public static final String SERVERUSER = "http://192.168.100.4:8080/WebServiceExamenSiete/webapi/Users/";
 
 

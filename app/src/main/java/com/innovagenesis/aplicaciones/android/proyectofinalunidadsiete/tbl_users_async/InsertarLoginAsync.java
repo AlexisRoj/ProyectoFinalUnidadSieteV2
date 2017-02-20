@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.widget.Toast;
+
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.R;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
@@ -65,7 +68,7 @@ public class InsertarLoginAsync extends AsyncTask<URL, Integer, Boolean> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        dialogo.setMessage("Por favor espere...");
+        dialogo.setMessage(activity.getString(R.string.waiting));
         dialogo.show();
     }
 

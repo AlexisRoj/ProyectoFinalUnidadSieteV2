@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.R;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -63,7 +65,7 @@ public class ConsultarUserAsync extends AsyncTask<URL, Integer,String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        dialog.setMessage("Espere por favor...");
+        dialog.setMessage(activity.getString(R.string.waiting));
     }
 
     @Override

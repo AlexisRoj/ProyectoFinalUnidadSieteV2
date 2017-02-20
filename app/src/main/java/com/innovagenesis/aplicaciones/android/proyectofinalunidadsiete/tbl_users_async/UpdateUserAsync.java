@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.R;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -64,7 +66,7 @@ public class UpdateUserAsync extends AsyncTask<URL,Integer,Boolean> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        dialog.setMessage("Por favor espere...");
+        dialog.setMessage(activity.getString(R.string.waiting));
         dialog.show();
     }
 
