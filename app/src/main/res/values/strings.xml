@@ -26,8 +26,10 @@
     <string name="mensajeEliminarCuenta">¿Realmente desea eliminar su cuenta?</string>
     <string name="aceptar">aceptar</string>
     <string name="userDelete">Usuario ha sido eliminado</string>
+    <string name="agrDonanteTitulo">Titulo</string>
+    <string name="agrDonanteId">No. Identificación</string>
 
-    
+
     <string-array name="factor_sanguineo">
         <item>RH+</item>
         <item>RH-</item>
