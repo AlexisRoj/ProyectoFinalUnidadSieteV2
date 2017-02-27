@@ -3,24 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp"
     android:background="@color/fondoBlanco">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         style="@style/StyleAgrDonante"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/linearLayout">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:textColor="@color/colorAccent"
             android:padding="10dp"
             android:text="@string/agrDonanteTitulo"
             android:textAlignment="center"
+            android:textColor="@color/colorAccent"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -108,9 +107,9 @@
 
         <LinearLayout
             style="@style/StyleAgrDonante"
-            android:layout_gravity="right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="right"
             android:orientation="horizontal"
             tools:ignore="RtlHardcoded">
 
@@ -123,27 +122,26 @@
                 tools:ignore="ContentDescription" />
 
             <Button
+                android:id="@+id/agrDonanteBtnAgregar"
                 style="@style/StyleBtnDonante"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="@string/agregar"
-                android:id="@+id/agrDonanteBtnAgregar"/>
+                android:text="@string/agregar" />
 
             <Space
                 android:layout_width="5dp"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
             <Button
+                android:id="@+id/agrDonanteBtnCancelar"
                 style="@style/StyleBtnDonante"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="@string/cancelar"
-                android:id="@+id/agrDonanteBtnCancelar"/>
+                android:text="@string/cancelar" />
 
         </LinearLayout>
 
     </LinearLayout>
-
 
 
 </RelativeLayout>

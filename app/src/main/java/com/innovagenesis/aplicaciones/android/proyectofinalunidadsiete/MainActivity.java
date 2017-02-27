@@ -15,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.adapters.Donantes;
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.dialogos.DialogoAgregarDonante;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.dialogos.DialogoCambiarContrasena;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.dialogos.DialogoCrearUsuario;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.preference.PreferenceConstant;
@@ -25,7 +27,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity
-        implements DialogoCambiarContrasena.OnCambiarContrasenaUserListener{
+        implements DialogoCambiarContrasena.OnCambiarContrasenaUserListener,
+        DialogoAgregarDonante.OnAgregarDonanteListener{
 
     private SharedPreferences pref;
     private String username;
@@ -44,6 +47,10 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                DialogoAgregarDonante dialogo = new DialogoAgregarDonante();
+                dialogo.show(getSupportFragmentManager(), DialogoAgregarDonante.TAG);
+
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
@@ -144,4 +151,8 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    @Override
+    public void AgregarDonante(Donantes donantes) {
+
+    }
 }
