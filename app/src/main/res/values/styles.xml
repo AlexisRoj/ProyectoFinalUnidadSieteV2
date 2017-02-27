@@ -19,8 +19,8 @@
 
     <style name="StyleAgrDonante">
         //Style de los margenes de los textos del dialogo agregar
-        <item name="android:padding">7dp</item>
-        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_marginTop">3dp</item>
         <item name="android:textSize">12sp</item>
 
 

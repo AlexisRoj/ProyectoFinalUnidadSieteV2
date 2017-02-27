@@ -23,35 +23,61 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <EditText
+
+        <android.support.design.widget.TextInputLayout
             android:id="@+id/agrDonanteId"
-            style="@style/StyleAgrDonante"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/agrDonanteId"
-            android:inputType="numberSigned|numberDecimal" />
+            android:layout_height="wrap_content">
 
-        <EditText
+            <EditText
+                style="@style/StyleAgrDonante"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/agrDonanteId"
+                android:inputType="numberSigned|numberDecimal" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:id="@+id/agrDonanteNombre"
-            style="@style/StyleAgrDonante"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/agrDonanteNombre" />
+            android:layout_height="wrap_content">
 
-        <EditText
+            <EditText
+                style="@style/StyleAgrDonante"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/agrDonanteNombre" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:id="@+id/agrDonanteApellido"
-            style="@style/StyleAgrDonante"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/agrDonanteApellido" />
+            android:layout_height="wrap_content">
 
-        <EditText
+            <EditText
+                style="@style/StyleAgrDonante"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/agrDonanteApellido" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:id="@+id/agrDonanteEdad"
-            style="@style/StyleAgrDonante"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/agrDonanteEdad"
-            android:inputType="number|numberSigned|numberDecimal" />
+            android:layout_height="wrap_content">
+
+            <EditText
+                style="@style/StyleAgrDonante"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/agrDonanteEdad"
+                android:inputType="number|numberSigned|numberDecimal" />
+
+        </android.support.design.widget.TextInputLayout>
+
 
         <Space
             android:layout_width="match_parent"
@@ -85,23 +111,35 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <EditText
+            <android.support.design.widget.TextInputLayout
                 android:id="@+id/agrDonantePeso"
-                style="@style/StyleAgrDonante"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/agrDonantePeso"
-                android:inputType="number|numberSigned|numberDecimal" />
+                android:layout_weight="1">
 
-            <EditText
+                <EditText
+                    style="@style/StyleAgrDonante"
+                    android:hint="@string/agrDonantePeso"
+                    android:inputType="number|numberSigned|numberDecimal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
                 android:id="@+id/agrDonanteEstatura"
-                style="@style/StyleAgrDonante"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/agrDonanteEstatura"
-                android:inputType="number|numberSigned|numberDecimal" />
+                android:layout_weight="1">
+
+                <EditText
+                    style="@style/StyleAgrDonante"
+                    android:hint="@string/agrDonanteEstatura"
+                    android:inputType="number|numberSigned|numberDecimal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
 
@@ -112,14 +150,6 @@
             android:layout_gravity="right"
             android:orientation="horizontal"
             tools:ignore="RtlHardcoded">
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginRight="30dp"
-                android:src="@drawable/login"
-                tools:ignore="ContentDescription" />
 
             <Button
                 android:id="@+id/agrDonanteBtnAgregar"
