@@ -38,7 +38,7 @@ public class UpdateUserAsync extends AsyncTask<URL,Integer,Boolean> {
 
         HttpURLConnection connection = null;
 
-        /** Importante la contraseña viaja como parte del cuerpo en el constructor*/
+        /** Importante la contraseña a cambiar viaja como parte del cuerpo en el constructor*/
 
         try {
             JSONObject datos = new JSONObject();

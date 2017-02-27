@@ -27,5 +27,17 @@
     <string name="aceptar">aceptar</string>
     <string name="userDelete">Usuario ha sido eliminado</string>
 
+    
+    <string-array name="factor_sanguineo">
+        <item>RH+</item>
+        <item>RH-</item>
+    </string-array>
+
+    <string-array name="grupo_sanguineo">
+        <item>A</item>
+        <item>B</item>
+        <item>O</item>
+        <item>AB</item>
+    </string-array>
 
 </resources>
