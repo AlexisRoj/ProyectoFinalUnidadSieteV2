@@ -9,7 +9,7 @@
     <string name="titleName">Control de Donaciones</string>
     <string name="ingresar">Ingresar</string>
     <string name="registrarse">Registrarse</string>
-    <string name="waiting">Por favor espere...</string>
+    <string name="waiting">Por favor espere…</string>
     <string name="errorLogin">El nombre de usuario o contrseña no son validos, vuelva a intentarlo</string>
     <string name="crear_usuario">Crear nuevo usuario</string>
     <string name="nombre_de_usuario">Nombre de usuario</string>
@@ -28,18 +28,26 @@
     <string name="userDelete">Usuario ha sido eliminado</string>
     <string name="agrDonanteTitulo">Titulo</string>
     <string name="agrDonanteId">No. Identificación</string>
+    <string name="agrDonanteNombre">Nombre</string>
+    <string name="agrDonanteApellido">Apellido</string>
+    <string name="agrDonanteEdad">Edad</string>
+    <string name="agrDonantePeso">Peso (kg)</string>
+    <string name="agrDonanteEstatura">Estatura (cm)</string>
+    <string name="agregar">Agregar</string>
 
 
     <string-array name="factor_sanguineo">
+        <item>Factor sanguineo</item>
         <item>RH+</item>
         <item>RH-</item>
     </string-array>
 
     <string-array name="grupo_sanguineo">
-        <item>A</item>
-        <item>B</item>
-        <item>O</item>
-        <item>AB</item>
+        <item>Grupo sanguineo</item>
+        <item>Tipo A</item>
+        <item>Tipo B</item>
+        <item>Tipo O</item>
+        <item>Tipo AB</item>
     </string-array>
 
 </resources>

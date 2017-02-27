@@ -1,44 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fondoBlanco"
-    android:layout_margin="10dp">
+    android:layout_margin="20dp"
+    android:background="@color/fondoBlanco">
 
     <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="vertical">
-
-       <TextView
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="10dp"
-           android:padding="10dp"
-           android:text="@string/agrDonanteTitulo"
-           android:textStyle="bold"
-           android:textSize="24sp"
-           android:textAlignment="center"/>
+        style="@style/StyleAgrDonante"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/linearLayout">
 
         <TextView
-            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorAccent"
             android:padding="10dp"
+            android:text="@string/agrDonanteTitulo"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/agrDonanteId"
+            style="@style/StyleAgrDonante"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/agrDonanteId"
-            android:id="@+id/agrDonanteId"/>
+            android:inputType="numberSigned|numberDecimal" />
+
+        <EditText
+            android:id="@+id/agrDonanteNombre"
+            style="@style/StyleAgrDonante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/agrDonanteNombre" />
+
+        <EditText
+            android:id="@+id/agrDonanteApellido"
+            style="@style/StyleAgrDonante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/agrDonanteApellido" />
+
+        <EditText
+            android:id="@+id/agrDonanteEdad"
+            style="@style/StyleAgrDonante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/agrDonanteEdad"
+            android:inputType="number|numberSigned|numberDecimal" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            style="@style/StyleAgrDonante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/agrDonanteGrupo"
+                style="@style/StyleAgrDonante"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Spinner
+                android:id="@+id/agrDonanteFactor"
+                style="@style/StyleAgrDonante"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/StyleAgrDonante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/agrDonantePeso"
+                style="@style/StyleAgrDonante"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/agrDonantePeso"
+                android:inputType="number|numberSigned|numberDecimal" />
+
+            <EditText
+                android:id="@+id/agrDonanteEstatura"
+                style="@style/StyleAgrDonante"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/agrDonanteEstatura"
+                android:inputType="number|numberSigned|numberDecimal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/StyleAgrDonante"
+            android:layout_gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:ignore="RtlHardcoded">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginRight="30dp"
+                android:src="@drawable/login"
+                tools:ignore="ContentDescription" />
+
+            <Button
+                style="@style/StyleBtnDonante"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/agregar"
+                android:id="@+id/agrDonanteBtnAgregar"/>
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="match_parent"/>
+
+            <Button
+                style="@style/StyleBtnDonante"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/cancelar"
+                android:id="@+id/agrDonanteBtnCancelar"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 
-   </LinearLayout>
-
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/login"
-        android:id="@+id/imageView"
-        android:layout_marginEnd="19dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="14dp" />
 
 </RelativeLayout>
