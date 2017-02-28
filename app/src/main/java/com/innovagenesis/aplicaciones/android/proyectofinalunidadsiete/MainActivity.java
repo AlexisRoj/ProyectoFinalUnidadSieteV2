@@ -28,7 +28,7 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity
         implements DialogoCambiarContrasena.OnCambiarContrasenaUserListener,
-        DialogoAgregarDonante.OnAgregarDonanteListener{
+        DialogoAgregarDonante.OnAgregarDonanteListener {
 
     private SharedPreferences pref;
     private String username;
@@ -41,18 +41,20 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         pref = getSharedPreferences(PreferenceConstant.PREFERENCE_LOGIN, MODE_PRIVATE);
-        username = pref.getString(PreferenceConstant.USER_NAME,null);
+        username = pref.getString(PreferenceConstant.USER_NAME, null);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+
                 DialogoAgregarDonante dialogo = new DialogoAgregarDonante();
                 dialogo.show(getSupportFragmentManager(), DialogoAgregarDonante.TAG);
 
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
             }
         });
     }
@@ -74,12 +76,12 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_close_pref) {
             borrarPreference();
         }
-        if (id == R.id.action_cambiarPass){
+        if (id == R.id.action_cambiarPass) {
             DialogoCambiarContrasena dialogo = new DialogoCambiarContrasena();
             dialogo.show(getSupportFragmentManager(), DialogoCrearUsuario.TAG);
         }
 
-        if (id == R.id.action_eliminar_cuenta){
+        if (id == R.id.action_eliminar_cuenta) {
 
             createSimpleDialog().show();
 
@@ -108,9 +110,9 @@ public class MainActivity extends AppCompatActivity
 
         try {
             /** Dependiendo del resultado del dialogo ejecuta el cambio*/
-            new UpdateUserAsync(this,userpass).execute(new URL(PreferenceConstant.SERVERUSER + username));
+            new UpdateUserAsync(this, userpass).execute(new URL(PreferenceConstant.SERVERUSER + username));
             /** Pedir ingreso para refrescar las preferencias*/
-            Toast.makeText(this, "Favor volver a ingresar al sistema",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Favor volver a ingresar al sistema", Toast.LENGTH_SHORT).show();
             borrarPreference();
         } catch (MalformedURLException e) {
             e.printStackTrace();
