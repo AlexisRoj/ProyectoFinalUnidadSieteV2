@@ -33,7 +33,7 @@ import static com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.R.
  * Created by alexi on 27/02/2017.
  */
 
-public class DialogoAgregarDonante extends DialogFragment{
+public class DialogoAgregarDonante extends DialogFragment {
 
 
     public static final String TAG = "dialogo_agregar_donantes";
@@ -42,6 +42,7 @@ public class DialogoAgregarDonante extends DialogFragment{
     TextInputLayout nombre, apellido, edad, grupo, factor, peso, estatura; // Campos del dialogo
 
     String[] arregloGrupo;
+    String[] arregloFactor;
 
     MainActivity activity = new MainActivity();
 
@@ -70,12 +71,16 @@ public class DialogoAgregarDonante extends DialogFragment{
         final Spinner spFactor = (Spinner) view.findViewById(R.id.agrDonanteFactor);
 
 
+        /**                                                                             **
+         *                                PRIMER SPINNER                                **
+         *                                                                              **
+         **                                                                             */
+
         arregloGrupo = getActivity().getResources().getStringArray(R.array.grupo_sanguineo);
 
-         final List<String> plantsList = new ArrayList<>(Arrays.asList(arregloGrupo));
-        // Initializing an ArrayAdapter
-        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
-                getActivity(), R.layout.spinner_item, plantsList) {
+        final List<String> aGrupoSanguinieo = new ArrayList<>(Arrays.asList(arregloGrupo));
+        final ArrayAdapter<String> spinnerArrayAdapterGrupo = new ArrayAdapter<String>(
+                getActivity(), R.layout.spinner_item, aGrupoSanguinieo) {
 
             /** Crea efecto de un hint en el spinner*/
             @Override
@@ -87,6 +92,7 @@ public class DialogoAgregarDonante extends DialogFragment{
                     return true;
                 }
             }
+
             @Override
             public View getDropDownView(int position, View convertView,
                                         ViewGroup parent) {
@@ -102,8 +108,49 @@ public class DialogoAgregarDonante extends DialogFragment{
             }
         };
 
-        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
-        spGrupo.setAdapter(spinnerArrayAdapter);
+        spinnerArrayAdapterGrupo.setDropDownViewResource(R.layout.spinner_item);
+        spGrupo.setAdapter(spinnerArrayAdapterGrupo);
+
+
+        /**                                                                            **
+        *                                SEGUNDO SPINNER                               **
+        *                                                                              **
+        **                                                                             */
+
+        arregloFactor = getActivity().getResources().getStringArray(R.array.factor_sanguineo);
+
+        final List<String> aFactorSanguinieo = new ArrayList<>(Arrays.asList(arregloGrupo));
+        final ArrayAdapter<String> spinnerArrayAdapterFactor = new ArrayAdapter<String>(
+                getActivity(), R.layout.spinner_item, aFactorSanguinieo) {
+
+            /** Crea efecto de un hint en el spinner*/
+            @Override
+            public boolean isEnabled(int position) {
+                if (position == 0) {
+                    /** Funciona para desabilitar un elemento del spinner*/
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if (position == 0) {
+                    /** Funciona para efecto visual de un elemento del spinner*/
+                    tv.setTextColor(Color.GRAY);
+                } else {
+                    tv.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
+
+        spinnerArrayAdapterGrupo.setDropDownViewResource(R.layout.spinner_item);
+        spFactor.setAdapter(spinnerArrayAdapterFactor);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setView(view);
@@ -112,8 +159,6 @@ public class DialogoAgregarDonante extends DialogFragment{
         return builder.create();
 
     }
-
-
 
 
 }
