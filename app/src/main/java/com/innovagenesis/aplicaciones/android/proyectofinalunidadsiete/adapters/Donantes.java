@@ -13,27 +13,30 @@ public class Donantes {
     private String donante_nombre;
     private String donante_apellido;
     private int donante_edad;
-    private String donante_tipo_sangre;
+    private String donante_grupo;
+    private String donante_factor;
     private int donante_peso;
     private int donante_estatura;
 
+    public Donantes() {
+    }
 
-    public Donantes(String donante_nombre,
+    public Donantes(int donante_ced,
+                    String donante_nombre,
                     String donante_apellido,
                     int donante_edad,
-                    String donante_tipo_sangre,
+                    String donante_grupo,
+                    String donante_factor,
                     int donante_peso,
                     int donante_estatura) {
+        this.donante_ced = donante_ced;
         this.donante_nombre = donante_nombre;
         this.donante_apellido = donante_apellido;
         this.donante_edad = donante_edad;
-        this.donante_tipo_sangre = donante_tipo_sangre;
+        this.donante_grupo = donante_grupo;
+        this.donante_factor = donante_factor;
         this.donante_peso = donante_peso;
         this.donante_estatura = donante_estatura;
-    }
-
-    public Donantes() {
-        //Constructor vacio
     }
 
     public int getDonante_ced() {
@@ -68,12 +71,20 @@ public class Donantes {
         this.donante_edad = donante_edad;
     }
 
-    public String getDonante_tipo_sangre() {
-        return donante_tipo_sangre;
+    public String getDonante_grupo() {
+        return donante_grupo;
     }
 
-    public void setDonante_tipo_sangre(String donante_tipo_sangre) {
-        this.donante_tipo_sangre = donante_tipo_sangre;
+    public void setDonante_grupo(String donante_grupo) {
+        this.donante_grupo = donante_grupo;
+    }
+
+    public String getDonante_factor() {
+        return donante_factor;
+    }
+
+    public void setDonante_factor(String donante_factor) {
+        this.donante_factor = donante_factor;
     }
 
     public int getDonante_peso() {
@@ -84,13 +95,11 @@ public class Donantes {
         this.donante_peso = donante_peso;
     }
 
-    public int getDonante_estatura(int i) {
+    public int getDonante_estatura() {
         return donante_estatura;
     }
 
     public void setDonante_estatura(int donante_estatura) {
         this.donante_estatura = donante_estatura;
     }
-
-
 }

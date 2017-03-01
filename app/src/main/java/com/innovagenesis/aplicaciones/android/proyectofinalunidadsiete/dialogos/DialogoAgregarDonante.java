@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,34 +42,19 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
     public static final String TAG = "dialogo_agregar_donantes";
 
     Donantes donantes;
-    TextInputLayout textImputNombre, textImputApellido, textImputEdad, textImputGrupo,
-            textImputFactor, textImputPeso, textImputEstatura; // Campos del dialogo
 
-    String nombre, apellido, grupo, factor;
-    int edad, peso, estatura;
+    TextInputLayout texInputCed, textInputNombre, textInputApellido, textInputEdad, textInputPeso,
+            textInputEstatura; // Campos del dialogo
+
+
+    EditText editTextCed, editTextNombre, editTextApellido, editTextEdad,
+            editTextPeso, editTextEstatura; // Campos del dialogo
+
+    String nombre = "", apellido = "", grupo = "", factor = "";
+    int cedula, edad, peso, estatura;
 
     String[] arregloGrupo;
     String[] arregloFactor;
-
-    @Override
-    public void onClick(View elemento) {
-        /** Botones del dialogo*/
-
-        switch (elemento.getId()){
-
-            case R.id.agrDonanteBtnAgregar:{
-                break;
-            }
-
-            case R.id.agrDonanteBtnCancelar:{
-                dismiss();
-            }
-
-        }
-
-
-    }
-
 
     public interface OnAgregarDonanteListener {
         /**
@@ -78,6 +64,10 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
     }
 
     private OnAgregarDonanteListener listener;
+
+    /********************************************************************************
+     * *                               onCreateDialog                               **
+     ********************************************************************************/
 
     @NonNull
     @Override
@@ -92,17 +82,27 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
         /** Spinner*/
         final Spinner spGrupo = (Spinner) view.findViewById(R.id.agrDonanteGrupo);
         final Spinner spFactor = (Spinner) view.findViewById(R.id.agrDonanteFactor);
+        /** Textview*/
+        TextView textView = (TextView) view.findViewById(R.id.agrDonanteTitulo);
+        /** TextInputLayout*/
+        texInputCed = (TextInputLayout) view.findViewById(R.id.agrDonanteId);
+        textInputNombre = (TextInputLayout) view.findViewById(R.id.agrDonanteNombre);
+        textInputApellido = (TextInputLayout) view.findViewById(R.id.agrDonanteApellido);
+        textInputEdad = (TextInputLayout) view.findViewById(R.id.agrDonanteEdad);
+        textInputPeso = (TextInputLayout) view.findViewById(R.id.agrDonantePeso);
+        textInputEstatura = (TextInputLayout) view.findViewById(R.id.agrDonanteEstatura);
+
+
+        textView.setText(R.string.agre_donante);
 
         btnAgregar.setOnClickListener(this);
         btnCancelar.setOnClickListener(this);
 
-        /**                                                                             **
-         *                                PRIMER SPINNER                                **
-         *                                                                              **
-         **                                                                             */
+        /********************************************************************************
+         *                                PRIMER SPINNER                               **
+         ********************************************************************************/
 
         arregloGrupo = getActivity().getResources().getStringArray(R.array.grupo_sanguineo);
-
         final List<String> aGrupoSanguinieo = new ArrayList<>(Arrays.asList(arregloGrupo));
         final ArrayAdapter<String> spinnerArrayAdapterGrupo = new ArrayAdapter<String>(
                 getActivity(), R.layout.spinner_item, aGrupoSanguinieo) {
@@ -132,15 +132,13 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
                 return view;
             }
         };
-
         spinnerArrayAdapterGrupo.setDropDownViewResource(R.layout.spinner_item);
         spGrupo.setAdapter(spinnerArrayAdapterGrupo);
-
         spGrupo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 /** Captura grupo sangineo*/
-                grupo = arregloGrupo [position];
+                grupo = arregloGrupo[position];
 
             }
 
@@ -149,20 +147,14 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
 
             }
         });
-
-
-
-        /**                                                                            **
-        *                                SEGUNDO SPINNER                               **
-        *                                                                              **
-        **                                                                             */
+        /********************************************************************************
+         *                                SEGUNDO SPINNER                               **
+         *********************************************************************************/
 
         arregloFactor = getActivity().getResources().getStringArray(R.array.factor_sanguineo);
-
         final List<String> aFactorSanguinieo = new ArrayList<>(Arrays.asList(arregloFactor));
         final ArrayAdapter<String> spinnerArrayAdapterFactor = new ArrayAdapter<String>(
                 getActivity(), R.layout.spinner_item, aFactorSanguinieo) {
-
             /** Crea efecto de un hint en el spinner*/
             @Override
             public boolean isEnabled(int position) {
@@ -188,29 +180,27 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
                 return view;
             }
         };
-
-
         spinnerArrayAdapterFactor.setDropDownViewResource(R.layout.spinner_item);
         spFactor.setAdapter(spinnerArrayAdapterFactor);
+        spFactor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                factor = arregloFactor[position];
+            }
 
-        nombre = "Alexis";
-        apellido = "Rojas";
-        edad = 38;
-        grupo = "Pelada";
-        peso = 100;
-        estatura = 180;
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
-        donantes = new Donantes(nombre,apellido,edad,grupo,peso,estatura);
-
-        listener.AgregarDonante(donantes);
-
+            }
+        });
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setView(view);
-
-
         return builder.create();
-
     }
+
+    /********************************************************************************
+     * *                                     onAttach                               **
+     ********************************************************************************/
 
     @Override
     public void onAttach(Context context) {
@@ -219,8 +209,129 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
         try {
 
             listener = (OnAgregarDonanteListener) context;
-        }catch (ClassCastException e) {
+        } catch (ClassCastException e) {
             throw new ClassCastException("La inteface no ha sido implementada en el activity");
+        }
+    }
+
+    @Override
+    public void onClick(View elemento) {
+        /** Botones del dialogo*/
+
+        switch (elemento.getId()) {
+
+            case R.id.agrDonanteBtnAgregar: {
+
+                /********************************************************************************
+                 *                       validacion y asignación campos                        **
+                 ********************************************************************************/
+
+
+                editTextCed = texInputCed.getEditText();
+                editTextNombre = textInputNombre.getEditText();
+                editTextApellido = textInputApellido.getEditText();
+                editTextEdad = textInputEdad.getEditText();
+                editTextPeso = textInputPeso.getEditText();
+                editTextEstatura = textInputEstatura.getEditText();
+
+
+                Boolean agregar = true;
+
+    /*            cedula=10;
+                nombre="Alex";
+                apellido="Rojas";
+                edad=38;
+                grupo="AB";
+                factor="RH+";
+                peso=95;
+                estatura=180;
+*/
+
+                mAsignaciones();
+
+                if (cedula == 0) {
+                    editTextCed.setError(getString(R.string.campoVacio));
+                    agregar = false;
+                }
+
+                if ("".equals(nombre)) {
+                    editTextNombre.setError(getString(R.string.campoVacio));
+                    agregar = false;
+                }
+                if ("".equals(apellido)) {
+                    editTextApellido.setError(getString(R.string.campoVacio));
+                    agregar = false;
+                }
+                if (edad == 0) {
+                    editTextEdad.setError(getString(R.string.campoVacio));
+                    agregar = false;
+                }
+                if (arregloFactor[0].equals(factor)) {
+                    Toast.makeText(getContext(), getString(R.string.mensajeFactor), Toast.LENGTH_SHORT)
+                            .show();
+                    agregar = false;
+                }
+                if (arregloGrupo[0].equals(grupo)) {
+                    Toast.makeText(getContext(), getString(R.string.mensajeGrupo), Toast.LENGTH_SHORT)
+                            .show();
+                    agregar = false;
+                }
+                if (peso == 0) {
+                    editTextPeso.setError(getString(R.string.campoVacio));
+                    agregar = false;
+                }
+                if (estatura == 0) {
+                    editTextEstatura.setError(getString(R.string.campoVacio));
+                    agregar = false;
+                }
+
+                //agregar = false;
+
+                if (agregar) {
+
+                    donantes = new Donantes(cedula, nombre, apellido, edad, grupo, factor, peso, estatura);
+                    listener.AgregarDonante(donantes);
+                    dismiss();
+                } else
+                    Toast.makeText(getContext(), "Existen Campos vacios", Toast.LENGTH_SHORT).show();
+
+                break;
+            }
+
+            case R.id.agrDonanteBtnCancelar: {
+                dismiss();
+            }
+
+        }
+
+
+    }
+
+    private void mAsignaciones() {
+        if (texInputCed != null) {
+            cedula = Integer.parseInt(editTextCed.getText().toString());
+        }
+
+        if (textInputNombre.getEditText() != null) {
+            nombre = editTextNombre.getText().toString();
+        }
+
+        if (textInputApellido.getEditText() != null) {
+            apellido = editTextApellido.getText().toString();
+        }
+
+        if (textInputEdad.getEditText() != null) {
+            edad = Integer.parseInt(editTextEdad.getText().toString());
+        }
+
+
+        if (textInputPeso.getEditText() != null) {
+            peso = Integer.parseInt(editTextPeso.getText().toString());
+        }
+
+
+        if (textInputEstatura != null) {
+            estatura = Integer.parseInt(editTextEstatura.getText().toString());
         }
     }
 }

@@ -178,6 +178,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
                 edit.apply();
                 cargarActivity();
             } else
+                /** Solo carga el usuario*/
                 edit.putString(PreferenceConstant.USER_NAME, user_name);
                 edit.putString(PreferenceConstant.USER_PASS, user_pass);
                 edit.apply();
@@ -216,7 +217,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
     @Override
     public void OnIfExistUserGetFinish(Boolean username) {
 
-        /** Si regresa */
+        /** validacion del usuario para ingresarlo/registrarlo al sistema*/
 
         if (username) {
             Toast.makeText(this, "El nombre usuario ingresado " +

@@ -34,6 +34,10 @@
     <string name="agrDonantePeso">Peso (kg)</string>
     <string name="agrDonanteEstatura">Estatura (cm)</string>
     <string name="agregar">Agregar</string>
+    <string name="agre_donante">Agregar donante</string>
+    <string name="campoVacio">Este campo no puede ser vacio</string>
+    <string name="mensajeFactor">Es necesario selecionar el factor sanguineo</string>
+    <string name="mensajeGrupo">Es necesario selecionar el grupo sanguineo</string>
 
 
     <string-array name="factor_sanguineo">

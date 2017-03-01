@@ -157,12 +157,16 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void AgregarDonante(Donantes donantes) {
 
-        TextView textView = (TextView)findViewById(R.id.text);
+        TextView textView = (TextView) findViewById(R.id.text);
 
         textView.setText(
-                donantes.getDonante_nombre() + " " +
-                        donantes.getDonante_apellido()+ " " +
-                        donantes.getDonante_edad()
-        );
+                donantes.getDonante_ced() + "\n " +
+                        donantes.getDonante_nombre() + "\n " +
+                        donantes.getDonante_apellido() + "\n " +
+                        donantes.getDonante_edad() + "\n " +
+                        donantes.getDonante_grupo() + "\n " +
+                        donantes.getDonante_factor() + "\n " +
+                        donantes.getDonante_peso() + "\n " +
+                        donantes.getDonante_estatura());
     }
 }
