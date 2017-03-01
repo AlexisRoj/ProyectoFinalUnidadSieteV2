@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.adapters.Donantes;
@@ -156,5 +157,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void AgregarDonante(Donantes donantes) {
 
+        TextView textView = (TextView)findViewById(R.id.text);
+
+        textView.setText(
+                donantes.getDonante_nombre() + " " +
+                        donantes.getDonante_apellido()+ " " +
+                        donantes.getDonante_edad()
+        );
     }
 }

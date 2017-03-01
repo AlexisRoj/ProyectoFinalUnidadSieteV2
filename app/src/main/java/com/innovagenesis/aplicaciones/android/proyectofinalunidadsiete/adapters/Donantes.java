@@ -17,6 +17,25 @@ public class Donantes {
     private int donante_peso;
     private int donante_estatura;
 
+
+    public Donantes(String donante_nombre,
+                    String donante_apellido,
+                    int donante_edad,
+                    String donante_tipo_sangre,
+                    int donante_peso,
+                    int donante_estatura) {
+        this.donante_nombre = donante_nombre;
+        this.donante_apellido = donante_apellido;
+        this.donante_edad = donante_edad;
+        this.donante_tipo_sangre = donante_tipo_sangre;
+        this.donante_peso = donante_peso;
+        this.donante_estatura = donante_estatura;
+    }
+
+    public Donantes() {
+        //Constructor vacio
+    }
+
     public int getDonante_ced() {
         return donante_ced;
     }
@@ -65,7 +84,7 @@ public class Donantes {
         this.donante_peso = donante_peso;
     }
 
-    public int getDonante_estatura() {
+    public int getDonante_estatura(int i) {
         return donante_estatura;
     }
 

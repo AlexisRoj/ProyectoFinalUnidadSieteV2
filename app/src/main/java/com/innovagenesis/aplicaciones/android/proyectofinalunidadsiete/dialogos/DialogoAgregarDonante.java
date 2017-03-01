@@ -2,6 +2,7 @@ package com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.dialogos
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.MainActivity;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.R;
@@ -33,18 +35,39 @@ import static com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.R.
  * Created by alexi on 27/02/2017.
  */
 
-public class DialogoAgregarDonante extends DialogFragment {
+public class DialogoAgregarDonante extends DialogFragment implements View.OnClickListener {
 
 
     public static final String TAG = "dialogo_agregar_donantes";
 
     Donantes donantes;
-    TextInputLayout nombre, apellido, edad, grupo, factor, peso, estatura; // Campos del dialogo
+    TextInputLayout textImputNombre, textImputApellido, textImputEdad, textImputGrupo,
+            textImputFactor, textImputPeso, textImputEstatura; // Campos del dialogo
+
+    String nombre, apellido, grupo, factor;
+    int edad, peso, estatura;
 
     String[] arregloGrupo;
     String[] arregloFactor;
 
-    MainActivity activity = new MainActivity();
+    @Override
+    public void onClick(View elemento) {
+        /** Botones del dialogo*/
+
+        switch (elemento.getId()){
+
+            case R.id.agrDonanteBtnAgregar:{
+                break;
+            }
+
+            case R.id.agrDonanteBtnCancelar:{
+                dismiss();
+            }
+
+        }
+
+
+    }
 
 
     public interface OnAgregarDonanteListener {
@@ -70,6 +93,8 @@ public class DialogoAgregarDonante extends DialogFragment {
         final Spinner spGrupo = (Spinner) view.findViewById(R.id.agrDonanteGrupo);
         final Spinner spFactor = (Spinner) view.findViewById(R.id.agrDonanteFactor);
 
+        btnAgregar.setOnClickListener(this);
+        btnCancelar.setOnClickListener(this);
 
         /**                                                                             **
          *                                PRIMER SPINNER                                **
@@ -111,6 +136,21 @@ public class DialogoAgregarDonante extends DialogFragment {
         spinnerArrayAdapterGrupo.setDropDownViewResource(R.layout.spinner_item);
         spGrupo.setAdapter(spinnerArrayAdapterGrupo);
 
+        spGrupo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                /** Captura grupo sangineo*/
+                grupo = arregloGrupo [position];
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
 
         /**                                                                            **
         *                                SEGUNDO SPINNER                               **
@@ -119,7 +159,7 @@ public class DialogoAgregarDonante extends DialogFragment {
 
         arregloFactor = getActivity().getResources().getStringArray(R.array.factor_sanguineo);
 
-        final List<String> aFactorSanguinieo = new ArrayList<>(Arrays.asList(arregloGrupo));
+        final List<String> aFactorSanguinieo = new ArrayList<>(Arrays.asList(arregloFactor));
         final ArrayAdapter<String> spinnerArrayAdapterFactor = new ArrayAdapter<String>(
                 getActivity(), R.layout.spinner_item, aFactorSanguinieo) {
 
@@ -149,8 +189,20 @@ public class DialogoAgregarDonante extends DialogFragment {
             }
         };
 
-        spinnerArrayAdapterGrupo.setDropDownViewResource(R.layout.spinner_item);
+
+        spinnerArrayAdapterFactor.setDropDownViewResource(R.layout.spinner_item);
         spFactor.setAdapter(spinnerArrayAdapterFactor);
+
+        nombre = "Alexis";
+        apellido = "Rojas";
+        edad = 38;
+        grupo = "Pelada";
+        peso = 100;
+        estatura = 180;
+
+        donantes = new Donantes(nombre,apellido,edad,grupo,peso,estatura);
+
+        listener.AgregarDonante(donantes);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setView(view);
@@ -160,5 +212,15 @@ public class DialogoAgregarDonante extends DialogFragment {
 
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
 
+        try {
+
+            listener = (OnAgregarDonanteListener) context;
+        }catch (ClassCastException e) {
+            throw new ClassCastException("La inteface no ha sido implementada en el activity");
+        }
+    }
 }
