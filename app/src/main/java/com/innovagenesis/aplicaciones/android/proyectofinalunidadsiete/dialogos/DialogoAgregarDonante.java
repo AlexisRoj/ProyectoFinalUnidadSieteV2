@@ -201,7 +201,6 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
     /********************************************************************************
      * *                                     onAttach                               **
      ********************************************************************************/
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -221,12 +220,9 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
         switch (elemento.getId()) {
 
             case R.id.agrDonanteBtnAgregar: {
-
                 /********************************************************************************
                  *                       validacion y asignación campos                        **
                  ********************************************************************************/
-
-
                 editTextCed = texInputCed.getEditText();
                 editTextNombre = textInputNombre.getEditText();
                 editTextApellido = textInputApellido.getEditText();
@@ -234,26 +230,13 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
                 editTextPeso = textInputPeso.getEditText();
                 editTextEstatura = textInputEstatura.getEditText();
 
-
                 Boolean agregar = true;
-
-    /*            cedula=10;
-                nombre="Alex";
-                apellido="Rojas";
-                edad=38;
-                grupo="AB";
-                factor="RH+";
-                peso=95;
-                estatura=180;
-*/
-
                 mAsignaciones();
 
                 if (cedula == 0) {
                     editTextCed.setError(getString(R.string.campoVacio));
                     agregar = false;
                 }
-
                 if ("".equals(nombre)) {
                     editTextNombre.setError(getString(R.string.campoVacio));
                     agregar = false;
@@ -267,13 +250,13 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
                     agregar = false;
                 }
                 if (arregloFactor[0].equals(factor)) {
-                    Toast.makeText(getContext(), getString(R.string.mensajeFactor), Toast.LENGTH_SHORT)
-                            .show();
+                    Toast.makeText(getContext(), getString(R.string.mensajeFactor),
+                            Toast.LENGTH_SHORT).show();
                     agregar = false;
                 }
                 if (arregloGrupo[0].equals(grupo)) {
-                    Toast.makeText(getContext(), getString(R.string.mensajeGrupo), Toast.LENGTH_SHORT)
-                            .show();
+                    Toast.makeText(getContext(), getString(R.string.mensajeGrupo),
+                            Toast.LENGTH_SHORT).show();
                     agregar = false;
                 }
                 if (peso == 0) {
@@ -284,52 +267,40 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
                     editTextEstatura.setError(getString(R.string.campoVacio));
                     agregar = false;
                 }
-
-                //agregar = false;
-
                 if (agregar) {
-
                     donantes = new Donantes(cedula, nombre, apellido, edad, grupo, factor, peso, estatura);
                     listener.AgregarDonante(donantes);
                     dismiss();
-                } else
-                    Toast.makeText(getContext(), "Existen Campos vacios", Toast.LENGTH_SHORT).show();
-
+                }
                 break;
             }
 
             case R.id.agrDonanteBtnCancelar: {
+                //Boton Cancelar
                 dismiss();
             }
-
         }
-
-
     }
 
     private void mAsignaciones() {
+
+        /** Realiza la asignacion de los recursos a cada variable**/
+
         if (texInputCed != null) {
             cedula = Integer.parseInt(editTextCed.getText().toString());
         }
-
         if (textInputNombre.getEditText() != null) {
             nombre = editTextNombre.getText().toString();
         }
-
         if (textInputApellido.getEditText() != null) {
             apellido = editTextApellido.getText().toString();
         }
-
         if (textInputEdad.getEditText() != null) {
             edad = Integer.parseInt(editTextEdad.getText().toString());
         }
-
-
         if (textInputPeso.getEditText() != null) {
             peso = Integer.parseInt(editTextPeso.getText().toString());
         }
-
-
         if (textInputEstatura != null) {
             estatura = Integer.parseInt(editTextEstatura.getText().toString());
         }
