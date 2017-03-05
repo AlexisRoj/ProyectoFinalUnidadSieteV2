@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,16 +19,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.MainActivity;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.R;
-import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.adapters.Donantes;
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.Donantes;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.R.array.grupo_sanguineo;
 
 /**
  * Dialogo que captura los datos del fragment

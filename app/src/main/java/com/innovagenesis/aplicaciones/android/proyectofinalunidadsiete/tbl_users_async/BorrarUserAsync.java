@@ -18,12 +18,12 @@ import java.net.URL;
  * Created by alexi on 19/02/2017.
  */
 
-public class DeleteUserAsync extends AsyncTask<URL, Integer, String> {
+public class BorrarUserAsync extends AsyncTask<URL, Integer, String> {
 
     private Activity activity;
     private ProgressDialog dialog;
 
-    public DeleteUserAsync(Activity activity) {
+    public BorrarUserAsync(Activity activity) {
         this.activity = activity;
         dialog = new ProgressDialog(activity);
     }

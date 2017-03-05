@@ -1,4 +1,4 @@
-package com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.adapters;
+package com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async;
 
 /**
  * Crea los valores a capturar en donantes
@@ -9,14 +9,14 @@ package com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.adapters
 public class Donantes {
 
 
-    private int donante_ced;
-    private String donante_nombre;
-    private String donante_apellido;
-    private int donante_edad;
-    private String donante_grupo;
-    private String donante_factor;
-    private int donante_peso;
-    private int donante_estatura;
+    public int donante_ced;
+    public String donante_nombre;
+    public String donante_apellido;
+    public int donante_edad;
+    public String donante_tipo;
+    public String donante_factor;
+    public int donante_peso;
+    public int donante_estatura;
 
     public Donantes() {
     }
@@ -25,7 +25,7 @@ public class Donantes {
                     String donante_nombre,
                     String donante_apellido,
                     int donante_edad,
-                    String donante_grupo,
+                    String donante_tipo,
                     String donante_factor,
                     int donante_peso,
                     int donante_estatura) {
@@ -33,7 +33,7 @@ public class Donantes {
         this.donante_nombre = donante_nombre;
         this.donante_apellido = donante_apellido;
         this.donante_edad = donante_edad;
-        this.donante_grupo = donante_grupo;
+        this.donante_tipo = donante_tipo;
         this.donante_factor = donante_factor;
         this.donante_peso = donante_peso;
         this.donante_estatura = donante_estatura;
@@ -72,11 +72,11 @@ public class Donantes {
     }
 
     public String getDonante_grupo() {
-        return donante_grupo;
+        return donante_tipo;
     }
 
     public void setDonante_grupo(String donante_grupo) {
-        this.donante_grupo = donante_grupo;
+        this.donante_tipo = donante_grupo;
     }
 
     public String getDonante_factor() {

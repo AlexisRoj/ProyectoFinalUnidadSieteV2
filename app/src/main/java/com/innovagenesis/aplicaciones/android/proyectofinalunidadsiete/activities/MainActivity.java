@@ -1,10 +1,9 @@
-package com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete;
+package com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -16,13 +15,14 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.adapters.Donantes;
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.R;
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.Donantes;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.dialogos.DialogoAgregarDonante;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.dialogos.DialogoCambiarContrasena;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.dialogos.DialogoCrearUsuario;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.preference.PreferenceConstant;
-import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_users_async.DeleteUserAsync;
-import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_users_async.UpdateUserAsync;
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_users_async.BorrarUserAsync;
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_users_async.ActualizarUserAsync;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity
 
         try {
             /** Dependiendo del resultado del dialogo ejecuta el cambio*/
-            new UpdateUserAsync(this, userpass).execute(new URL(PreferenceConstant.SERVERUSER + username));
+            new ActualizarUserAsync(this, userpass).execute(new URL(PreferenceConstant.SERVICE_TBL_USERS + username));
             /** Pedir ingreso para refrescar las preferencias*/
             Toast.makeText(this, "Favor volver a ingresar al sistema", Toast.LENGTH_SHORT).show();
             borrarPreference();
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity
                             public void onClick(DialogInterface dialog, int which) {
 
                                 try {
-                                    new DeleteUserAsync(MainActivity.this).execute(new URL(PreferenceConstant.SERVERUSER +
+                                    new BorrarUserAsync(MainActivity.this).execute(new URL(PreferenceConstant.SERVICE_TBL_USERS +
                                             username));
                                     borrarPreference();
                                 } catch (MalformedURLException e) {
@@ -156,6 +156,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void AgregarDonante(Donantes donantes) {
+        /**
+         * Es el licener del boton agregar donantes*/
 
         TextView textView = (TextView) findViewById(R.id.text);
 

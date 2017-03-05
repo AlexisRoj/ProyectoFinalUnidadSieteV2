@@ -20,14 +20,14 @@ import java.net.URL;
  * Created by alexi on 19/02/2017.
  */
 
-public class UpdateUserAsync extends AsyncTask<URL,Integer,Boolean> {
+public class ActualizarUserAsync extends AsyncTask<URL,Integer,Boolean> {
 
     private ProgressDialog dialog;
     private Activity activity;
     private String user_pass;
 
 
-    public UpdateUserAsync(Activity activity, String user_pass) {
+    public ActualizarUserAsync(Activity activity, String user_pass) {
         this.activity = activity;
         this.user_pass = user_pass;
         dialog = new ProgressDialog(activity);
