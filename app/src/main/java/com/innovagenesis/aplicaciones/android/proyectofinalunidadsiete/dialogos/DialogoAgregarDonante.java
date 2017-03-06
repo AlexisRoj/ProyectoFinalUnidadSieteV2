@@ -38,6 +38,7 @@ import java.util.List;
 public class DialogoAgregarDonante extends DialogFragment implements View.OnClickListener {
 
 
+
     public static final String TAG = "dialogo_agregar_donantes";
 
     Donantes donantes;
@@ -60,9 +61,6 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
         //Constructor vacio
     }
 
-    public DialogoAgregarDonante(Donantes donantes) {
-        this.donantes = donantes;
-    }
 
     public interface OnAgregarDonanteListener {
         /**

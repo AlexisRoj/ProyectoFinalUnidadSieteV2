@@ -12,7 +12,7 @@ public class PreferenceConstant {
       * el formato completo la ip + el puerto ejemplo: 192.168.100.5:8080
       * */
 
-    private static final String ip = "192.168.100.3:8080";
+    private static final String ip = "192.168.100.7:8080";
 
 
     public static final String PREFERENCE_LOGIN = "Inicio de Sección";

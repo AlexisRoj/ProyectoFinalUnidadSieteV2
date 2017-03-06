@@ -1,12 +1,14 @@
 package com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async;
 
+import java.io.Serializable;
+
 /**
  * Crea los valores a capturar en donantes
  * Clase que ayuda a agregar los donantes
  * Created by alexi on 27/02/2017.
  */
 
-public class Donantes {
+public class Donantes implements Serializable{
 
 
     public int donante_ced;
