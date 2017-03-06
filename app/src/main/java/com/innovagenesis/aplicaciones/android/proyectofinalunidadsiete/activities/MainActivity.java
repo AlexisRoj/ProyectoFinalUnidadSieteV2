@@ -8,6 +8,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
@@ -21,18 +23,24 @@ import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.dialogos.
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.dialogos.DialogoCambiarContrasena;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.dialogos.DialogoCrearUsuario;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.preference.PreferenceConstant;
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.adapter.RecyclerViewAdapter;
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.donantes_async.ListarDonantesAsync;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_users_async.BorrarUserAsync;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_users_async.ActualizarUserAsync;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements DialogoCambiarContrasena.OnCambiarContrasenaUserListener,
-        DialogoAgregarDonante.OnAgregarDonanteListener {
+        DialogoAgregarDonante.OnAgregarDonanteListener,
+        ListarDonantesAsync.OnListarDonantes{
 
     private SharedPreferences pref;
     private String username;
+    private RecyclerView recyclerView;
+    private RecyclerViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +66,14 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
+
+        /** Desplegar elementos del RecyclerView al iniciar **/
+
+        try {
+            new ListarDonantesAsync(this).execute(new URL(PreferenceConstant.SERVICE_TBL_DONANTES));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -170,5 +186,17 @@ public class MainActivity extends AppCompatActivity
                         donantes.getDonante_factor() + "\n " +
                         donantes.getDonante_peso() + "\n " +
                         donantes.getDonante_estatura());
+    }
+
+    @Override
+    public void ListarDonantes(List<Donantes> donantes) {
+
+        recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
+        adapter = new RecyclerViewAdapter(this,MainActivity.this,donantes);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
     }
 }

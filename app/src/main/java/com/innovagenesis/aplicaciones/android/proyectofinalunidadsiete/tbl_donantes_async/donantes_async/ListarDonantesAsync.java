@@ -11,7 +11,9 @@ import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donan
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -56,6 +58,10 @@ public class ListarDonantesAsync extends AsyncTask<URL, Integer, String> {
 
         try {
             connection = (HttpURLConnection) params[0].openConnection();
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(connection.getInputStream()));
+            return reader.readLine();
+
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Error en la conexion");

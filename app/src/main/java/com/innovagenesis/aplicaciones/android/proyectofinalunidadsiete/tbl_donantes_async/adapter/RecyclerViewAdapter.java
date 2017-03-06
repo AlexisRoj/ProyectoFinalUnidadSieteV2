@@ -2,6 +2,8 @@ package com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_dona
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +11,12 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.R;
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.preference.PreferenceConstant;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.Donantes;
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_users_async.BorrarUserAsync;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,7 +29,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
 
     private Context context;
     private Activity activity;
-    LayoutInflater inflater;
+    private LayoutInflater inflater;
     private List<Donantes> data = Collections.emptyList();
 
     public RecyclerViewAdapter(Context context, Activity activity, List<Donantes> data) {
@@ -38,9 +44,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = inflater.inflate(R.layout.template_item_donante,parent,false);
-        RecyclerViewHolder viewHolder = new RecyclerViewHolder(view);
 
-        return viewHolder;
+        return new RecyclerViewHolder(view);
     }
 
     @Override
@@ -62,15 +67,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context,"Delete",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"Editar donante",Toast.LENGTH_SHORT).show();
             }
         });
 
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int item = holder.getAdapterPosition();
-                //aca quede
+                //Mensaje que pregunta antes de eliminar un donante
+                elimarDonante(holder,idDonanteBorrar).show();
             }
         });
 
@@ -78,6 +83,51 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
 
     @Override
     public int getItemCount() {
-        return 0;
+        return data.size();
+    }
+
+    public AlertDialog elimarDonante(final RecyclerViewHolder holder, final int idDonanteBorrar) {
+
+        /** Dialogo que borra la cuenta de usuario en la que se encuentra*/
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setTitle(R.string.tituloMensajeEliminarDonante)
+                .setMessage(R.string.eliminarDonante)
+                .setPositiveButton(activity.getString(R.string.aceptar),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                int item = holder.getAdapterPosition();
+
+                                try {
+                                    /** Remueve el donante de la base de datos*/
+                                    new BorrarUserAsync(activity).execute(
+                                            new URL(PreferenceConstant.SERVICE_TBL_DONANTES
+                                                    + idDonanteBorrar));
+
+                                    /** Remuelve el elemento del recyclerView*/
+                                    remoteDonanteRecycler(item);
+                                } catch (MalformedURLException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        })
+                .setNegativeButton(activity.getString(R.string.cancelar),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+        return builder.create();
+    }
+
+    private void remoteDonanteRecycler(int item) {
+        //Elimina los items del recyclerView
+        data.remove(item);
+        notifyItemRemoved(item);
+        notifyItemRangeChanged(item, data.size());
     }
 }

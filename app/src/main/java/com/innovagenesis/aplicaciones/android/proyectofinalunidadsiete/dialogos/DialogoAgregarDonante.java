@@ -20,8 +20,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.R;
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.preference.PreferenceConstant;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.Donantes;
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.donantes_async.InsertarDonanteAsync;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,6 +54,11 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
 
     String[] arregloGrupo;
     String[] arregloFactor;
+
+    public DialogoAgregarDonante() {
+        //Constructor vacio
+    }
+
 
     public interface OnAgregarDonanteListener {
         /**
@@ -264,7 +273,15 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
                 }
                 if (agregar) {
                     donantes = new Donantes(cedula, nombre, apellido, edad, grupo, factor, peso, estatura);
-                    listener.AgregarDonante(donantes);
+
+                    try {
+                        new InsertarDonanteAsync(donantes,getActivity()).execute(
+                                new URL(PreferenceConstant.SERVICE_TBL_DONANTES));
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+
+                    //listener.AgregarDonante(donantes);
                     dismiss();
                 }
                 break;

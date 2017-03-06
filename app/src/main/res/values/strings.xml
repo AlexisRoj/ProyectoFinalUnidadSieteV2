@@ -38,6 +38,8 @@
     <string name="campoVacio">Este campo no puede ser vacio</string>
     <string name="mensajeFactor">Es necesario selecionar el factor sanguineo</string>
     <string name="mensajeGrupo">Es necesario selecionar el grupo sanguineo</string>
+    <string name="eliminarDonante">¿Realmente desea eliminar el donante?</string>
+    <string name="tituloMensajeEliminarDonante">Eliminar donante</string>
 
 
     <string-array name="factor_sanguineo">
