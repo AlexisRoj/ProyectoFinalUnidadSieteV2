@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.R;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.preference.PreferenceConstant;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.Donantes;
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.donantes_async.BorrarDonantesAsync;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_users_async.BorrarUserAsync;
 
 import java.net.MalformedURLException;
@@ -52,7 +53,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
     public void onBindViewHolder(final RecyclerViewHolder holder, int position) {
 
         final Donantes current = data.get(position);
-        final int idDonanteBorrar = holder.getAdapterPosition();
+        final int idDonanteBorrar = current.donante_ced;
 
         /** Carga los datos en el recyclerView */
         holder.idCedula.setText(String.valueOf(current.donante_ced));
@@ -102,7 +103,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
 
                                 try {
                                     /** Remueve el donante de la base de datos*/
-                                    new BorrarUserAsync(activity).execute(
+                                    new BorrarDonantesAsync(activity).execute(
                                             new URL(PreferenceConstant.SERVICE_TBL_DONANTES
                                                     + idDonanteBorrar));
 
