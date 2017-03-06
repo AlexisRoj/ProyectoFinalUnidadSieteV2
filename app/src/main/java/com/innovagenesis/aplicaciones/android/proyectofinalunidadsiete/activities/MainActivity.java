@@ -28,7 +28,6 @@ import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donan
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.donantes_async.ListarDonantesAsync;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_users_async.BorrarUserAsync;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_users_async.ActualizarUserAsync;
-import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_users_async.InsertarLoginAsync;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -72,7 +71,7 @@ public class MainActivity extends AppCompatActivity
         /** Desplegar elementos del RecyclerView al iniciar **/
 
         try {
-            new ListarDonantesAsync(this).execute(new URL(PreferenceConstant.SERVICE_TBL_DONANTES));
+            new ListarDonantesAsync(this).execute(new URL(PreferenceConstant.URL_TBL_DONANTES));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -129,7 +128,7 @@ public class MainActivity extends AppCompatActivity
 
         try {
             /** Dependiendo del resultado del dialogo ejecuta el cambio*/
-            new ActualizarUserAsync(this, userpass).execute(new URL(PreferenceConstant.SERVICE_TBL_USERS + username));
+            new ActualizarUserAsync(this, userpass).execute(new URL(PreferenceConstant.URL_TBL_USERS + username));
             /** Pedir ingreso para refrescar las preferencias*/
             Toast.makeText(this, "Favor volver a ingresar al sistema", Toast.LENGTH_SHORT).show();
             borrarPreference();
@@ -152,7 +151,7 @@ public class MainActivity extends AppCompatActivity
                             public void onClick(DialogInterface dialog, int which) {
 
                                 try {
-                                    new BorrarUserAsync(MainActivity.this).execute(new URL(PreferenceConstant.SERVICE_TBL_USERS +
+                                    new BorrarUserAsync(MainActivity.this).execute(new URL(PreferenceConstant.URL_TBL_USERS +
                                             username));
                                     borrarPreference();
                                 } catch (MalformedURLException e) {
@@ -207,7 +206,7 @@ public class MainActivity extends AppCompatActivity
 
         if (agregado) {
             try {
-                new ListarDonantesAsync(this).execute(new URL(PreferenceConstant.SERVICE_TBL_DONANTES));
+                new ListarDonantesAsync(this).execute(new URL(PreferenceConstant.URL_TBL_DONANTES));
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }

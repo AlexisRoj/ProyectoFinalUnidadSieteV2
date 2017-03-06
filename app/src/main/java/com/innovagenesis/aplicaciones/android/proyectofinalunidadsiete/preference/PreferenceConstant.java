@@ -20,10 +20,10 @@ public class PreferenceConstant {
     public static final String USER_PASS = "Clave";
     public static final String USER_PREF = "false";
 
-    public static final String SERVICE_TBL_USERS =
+    public static final String URL_TBL_USERS =
             "http://" + ip + "/WebServiceExamenSiete/webapi/Users/";
 
-    public static final String SERVICE_TBL_DONANTES =
+    public static final String URL_TBL_DONANTES =
             "http://" +ip + "/WebServiceExamenSiete/webapi/Donantes/";
 
 

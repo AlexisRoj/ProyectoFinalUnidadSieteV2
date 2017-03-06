@@ -14,7 +14,7 @@ import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.R;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.preference.PreferenceConstant;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.Donantes;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.donantes_async.BorrarDonantesAsync;
-import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_users_async.BorrarUserAsync;
+
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -104,7 +104,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
                                 try {
                                     /** Remueve el donante de la base de datos*/
                                     new BorrarDonantesAsync(activity).execute(
-                                            new URL(PreferenceConstant.SERVICE_TBL_DONANTES
+                                            new URL(PreferenceConstant.URL_TBL_DONANTES
                                                     + idDonanteBorrar));
 
                                     /** Remuelve el elemento del recyclerView*/

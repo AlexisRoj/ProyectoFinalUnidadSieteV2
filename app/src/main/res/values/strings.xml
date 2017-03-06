@@ -40,6 +40,8 @@
     <string name="mensajeGrupo">Es necesario selecionar el grupo sanguineo</string>
     <string name="eliminarDonante">¿Realmente desea eliminar el donante?</string>
     <string name="tituloMensajeEliminarDonante">Eliminar donante</string>
+    <string name="userActualizado">Usuario registrado correctamente</string>
+    <string name="donantesActualizado">Los datos del donante han sido modificados</string>
 
 
     <string-array name="factor_sanguineo">

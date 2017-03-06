@@ -89,7 +89,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
              * para hacer login */
             try {
                 new ConsultarLoginAsync(this).execute(
-                        new URL(PreferenceConstant.SERVICE_TBL_USERS
+                        new URL(PreferenceConstant.URL_TBL_USERS
                         + user_name + "/" + user_pass));
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -141,7 +141,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
                     /** Primero crea la conexion al servicio */
                     try {
                         new ConsultarLoginAsync(this).execute(new
-                                URL(PreferenceConstant.SERVICE_TBL_USERS
+                                URL(PreferenceConstant.URL_TBL_USERS
                                 + user_name + "/" + user_pass));
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
@@ -202,7 +202,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
 
         try {
             new ConsultarUserAsync(this).execute(
-                    new URL(PreferenceConstant.SERVICE_TBL_USERS
+                    new URL(PreferenceConstant.URL_TBL_USERS
                     + username));
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -223,7 +223,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
                 /** Ingresa el usuario y carga la activity*/
                 new InsertarLoginAsync(this, usernameInsertar, userpassInsertar)
                         .execute(new
-                                URL(PreferenceConstant.SERVICE_TBL_USERS));
+                                URL(PreferenceConstant.URL_TBL_USERS));
                 cargarActivity();
             } catch (MalformedURLException e) {
                 e.printStackTrace();

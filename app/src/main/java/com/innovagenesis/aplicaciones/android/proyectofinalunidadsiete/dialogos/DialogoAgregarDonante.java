@@ -55,10 +55,14 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
     String[] arregloGrupo;
     String[] arregloFactor;
 
+
     public DialogoAgregarDonante() {
         //Constructor vacio
     }
 
+    public DialogoAgregarDonante(Donantes donantes) {
+        this.donantes = donantes;
+    }
 
     public interface OnAgregarDonanteListener {
         /**
@@ -275,13 +279,12 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
                     donantes = new Donantes(cedula, nombre, apellido, edad, grupo, factor, peso, estatura);
 
                     try {
+                        /** Seccion encargada de almacenar el donante*/
                         new InsertarDonanteAsync(donantes,getActivity()).execute(
-                                new URL(PreferenceConstant.SERVICE_TBL_DONANTES));
+                                new URL(PreferenceConstant.URL_TBL_DONANTES));
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
-
-                    //listener.AgregarDonante(donantes);
                     dismiss();
                 }
                 break;
