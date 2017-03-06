@@ -24,9 +24,11 @@ import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.dialogos.
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.dialogos.DialogoCrearUsuario;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.preference.PreferenceConstant;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.adapter.RecyclerViewAdapter;
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.donantes_async.InsertarDonanteAsync;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.donantes_async.ListarDonantesAsync;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_users_async.BorrarUserAsync;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_users_async.ActualizarUserAsync;
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_users_async.InsertarLoginAsync;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -35,7 +37,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements DialogoCambiarContrasena.OnCambiarContrasenaUserListener,
         DialogoAgregarDonante.OnAgregarDonanteListener,
-        ListarDonantesAsync.OnListarDonantes{
+        ListarDonantesAsync.OnListarDonantes, InsertarDonanteAsync.OnDonanteAgregado {
 
     private SharedPreferences pref;
     private String username;
@@ -191,12 +193,25 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void ListarDonantes(List<Donantes> donantes) {
 
-        recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
-        adapter = new RecyclerViewAdapter(this,MainActivity.this,donantes);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        adapter = new RecyclerViewAdapter(this, MainActivity.this, donantes);
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
+    }
+
+    @Override
+    public void DonanteAgregado(Boolean agregado) {
+
+        if (agregado) {
+            try {
+                new ListarDonantesAsync(this).execute(new URL(PreferenceConstant.SERVICE_TBL_DONANTES));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 }

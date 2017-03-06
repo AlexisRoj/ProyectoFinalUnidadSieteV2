@@ -28,12 +28,23 @@ public class InsertarDonanteAsync extends AsyncTask<URL, Integer, Boolean> {
     private Activity activity;
     private ProgressDialog dialog;
 
+    public interface OnDonanteAgregado {
+        void DonanteAgregado(Boolean agregado);
+    }
+
+    private OnDonanteAgregado listener;
 
 
     public InsertarDonanteAsync(Donantes donantes, Activity activity) {
         this.donantes = donantes;
         this.activity = activity;
         dialog = new ProgressDialog(activity);
+
+        try {
+            listener = (OnDonanteAgregado) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException("La interface no ha sido implementada");
+        }
     }
 
     @Override
@@ -86,6 +97,7 @@ public class InsertarDonanteAsync extends AsyncTask<URL, Integer, Boolean> {
         super.onPostExecute(aBoolean);
 
         if (aBoolean){
+            listener.DonanteAgregado(true);
             Toast.makeText(activity, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show();
             activity.closeContextMenu();
         }

@@ -11,6 +11,7 @@ import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donan
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -28,6 +29,8 @@ public class InsertarLoginAsync extends AsyncTask<URL, Integer, Boolean> {
     private Activity activity;
     private String username;
     private String userpass;
+
+
 
     public InsertarLoginAsync(Activity activity, String username,
                               String userpass) {
@@ -61,7 +64,7 @@ public class InsertarLoginAsync extends AsyncTask<URL, Integer, Boolean> {
 
         } catch (JSONException | IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             assert connection != null;
             connection.disconnect();
         }
@@ -79,16 +82,11 @@ public class InsertarLoginAsync extends AsyncTask<URL, Integer, Boolean> {
     protected void onPostExecute(Boolean bool) {
         super.onPostExecute(bool);
 
-        if (bool){
+        if (bool) {
             Toast.makeText(activity, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show();
-            try {
-                new ListarDonantesAsync(activity).execute(new URL(PreferenceConstant.SERVICE_TBL_DONANTES));
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
             activity.closeContextMenu();
         }
 
-        if (dialogo.isShowing())dialogo.dismiss();
+        if (dialogo.isShowing()) dialogo.dismiss();
     }
 }
