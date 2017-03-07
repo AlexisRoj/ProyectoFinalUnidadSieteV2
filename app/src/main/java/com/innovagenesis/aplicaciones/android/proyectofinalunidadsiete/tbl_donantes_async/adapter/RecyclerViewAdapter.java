@@ -16,6 +16,7 @@ import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donan
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.donantes_async.BorrarDonantesAsync;
 
 
+import java.io.ObjectOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collections;
@@ -69,6 +70,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
             @Override
             public void onClick(View v) {
                 Toast.makeText(context,"Editar donante",Toast.LENGTH_SHORT).show();
+
+
+               /* data.add()
+                ObjectOutputStream output =
+                        new ObjectOutputStream(context.openFileOutput(nombreArchivo,
+                                Context.MODE_PRIVATE));
+                output.writeObject(vehiculos);
+                output.close();*/
             }
         });
 
