@@ -1,5 +1,6 @@
 package com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.dialogos;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +26,9 @@ import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.preferenc
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.Donantes;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.donantes_async.InsertarDonanteAsync;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -38,8 +43,9 @@ import java.util.List;
 public class DialogoAgregarDonante extends DialogFragment implements View.OnClickListener {
 
 
-
     public static final String TAG = "dialogo_agregar_donantes";
+
+    private Boolean nuevoDonante = true;
 
     Donantes donantes;
 
@@ -61,15 +67,6 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
         //Constructor vacio
     }
 
-
-    public interface OnAgregarDonanteListener {
-        /**
-         * Interface que captura los datos y envia un objeto donante
-         */
-        void AgregarDonante(Donantes donantes);
-    }
-
-    private OnAgregarDonanteListener listener;
 
     /********************************************************************************
      * *                               onCreateDialog                               **
@@ -97,6 +94,13 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
         textInputEdad = (TextInputLayout) view.findViewById(R.id.agrDonanteEdad);
         textInputPeso = (TextInputLayout) view.findViewById(R.id.agrDonantePeso);
         textInputEstatura = (TextInputLayout) view.findViewById(R.id.agrDonanteEstatura);
+        /** EditText se utiliza para la edicion*/
+        editTextCed = (EditText) view.findViewById(R.id.editDonanteId);
+        editTextNombre = (EditText) view.findViewById(R.id.editDonanteNombre);
+        editTextApellido = (EditText) view.findViewById(R.id.editDonanteApellido);
+        editTextEdad = (EditText) view.findViewById(R.id.editDonanteEdad);
+        editTextPeso = (EditText) view.findViewById(R.id.editDonantePeso);
+        editTextEstatura = (EditText) view.findViewById(R.id.editDonanteEstatura);
 
 
         textView.setText(R.string.agre_donante);
@@ -199,29 +203,26 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
 
             }
         });
+
+
+        /** Trae los argumentos desde el adapter, pasa por el activity*/
+        Bundle args = getArguments();
+        if (args != null) {
+            nuevoDonante = false;
+            /** Metodo encargado de instanciar y asignar los valores de la ediccion*/
+            mRellenarEdit(spGrupo, spFactor, args);
+        }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setView(view);
         return builder.create();
     }
 
-    /********************************************************************************
-     * *                                     onAttach                               **
-     ********************************************************************************/
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        try {
-
-            listener = (OnAgregarDonanteListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException("La inteface no ha sido implementada en el activity");
-        }
-    }
-
+    @SuppressLint("Assert")
     @Override
     public void onClick(View elemento) {
         /** Botones del dialogo*/
+
 
         switch (elemento.getId()) {
 
@@ -274,20 +275,23 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
                     agregar = false;
                 }
                 if (agregar) {
-                    donantes = new Donantes(cedula, nombre, apellido, edad, grupo, factor, peso, estatura);
+                    /** Agregar es una validacion para los campos que no se encuentren vacios**/
+                    if (nuevoDonante) {
+                        /** Separa si una inserccion nueva o es una modificacion*/
+                        donantes = new Donantes(cedula, nombre, apellido, edad, grupo, factor, peso, estatura);
+                        try {
+                            /** Seccion encargada de almacenar el donante*/
+                            new InsertarDonanteAsync(donantes, getActivity()).execute(
+                                    new URL(PreferenceConstant.URL_TBL_DONANTES));
 
-                    try {
-                        /** Seccion encargada de almacenar el donante*/
-                        new InsertarDonanteAsync(donantes,getActivity()).execute(
-                                new URL(PreferenceConstant.URL_TBL_DONANTES));
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                     dismiss();
                 }
                 break;
             }
-
             case R.id.agrDonanteBtnCancelar: {
                 //Boton Cancelar
                 dismiss();
@@ -317,5 +321,31 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
         if (textInputEstatura != null) {
             estatura = Integer.parseInt(editTextEstatura.getText().toString());
         }
+    }
+
+    private void mRellenarEdit(Spinner spGrupo, Spinner spFactor, Bundle args) {
+        /** Encargado de instanciar todos los elementos con los argumentos */
+        editTextCed.setText(String.valueOf(args.getInt("cedula")));
+        editTextNombre.setText(args.getString("nombre"));
+        editTextApellido.setText(args.getString("apellido"));
+        editTextEdad.setText(String.valueOf(args.getInt("edad")));
+        editTextPeso.setText(String.valueOf(args.getInt("peso")));
+        editTextEstatura.setText(String.valueOf(args.getInt("estatura")));
+        //Seleciona los spinner
+        spGrupo.setSelection(getIndex(spGrupo, args.getString("tipoSangre")));
+        spFactor.setSelection(getIndex(spFactor, args.getString("factorSangre")));
+    }
+
+    //private method of your class
+    private int getIndex (Spinner spinner, String myString){
+        /** Recorre el spinner para realizar la seleccion*/
+        int index = 0;
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)) {
+                index = i;
+                break;
+            }
+        }
+        return index;
     }
 }

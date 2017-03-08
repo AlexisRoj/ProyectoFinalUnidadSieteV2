@@ -1,8 +1,10 @@
 package com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.adapter;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,11 +13,13 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.R;
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.dialogos.DialogoAgregarDonante;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.preference.PreferenceConstant;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.Donantes;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.donantes_async.BorrarDonantesAsync;
 
 
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -40,7 +44,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
         this.activity = activity;
         this.data = data;
         inflater = LayoutInflater.from(context);
+
+        try {
+            listener = (OnEditarDonante)activity;
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+        }
     }
+
+
+    public interface OnEditarDonante {
+
+        void EditarDonante (Bundle args);
+    }
+
+    private OnEditarDonante listener;
+
+
 
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -72,12 +92,32 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
                 Toast.makeText(context,"Editar donante",Toast.LENGTH_SHORT).show();
 
 
-               /* data.add()
-                ObjectOutputStream output =
-                        new ObjectOutputStream(context.openFileOutput(nombreArchivo,
-                                Context.MODE_PRIVATE));
-                output.writeObject(vehiculos);
-                output.close();*/
+                String nombre,apellido,tipoSangre,factorSangre;
+                int idCedula,edad,peso, estatura;
+
+                idCedula = current.donante_ced;
+                nombre = current.donante_nombre;
+                apellido = current.donante_apellido;
+                edad = current.donante_edad;
+                tipoSangre = current.donante_tipo;
+                factorSangre = current.donante_factor;
+                peso = current.donante_peso;
+                estatura = current.donante_estatura;
+
+
+                Bundle args = new Bundle();
+
+                args.putInt("cedula",idCedula);
+                args.putString("nombre",nombre);
+                args.putString("apellido",apellido);
+                args.putInt("edad",edad);
+                args.putString("tipoSangre",tipoSangre);
+                args.putString("factorSangre",factorSangre);
+                args.putInt("peso",peso);
+                args.putInt("estatura",estatura);
+
+                listener.EditarDonante(args);
+
             }
         });
 

@@ -35,8 +35,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements DialogoCambiarContrasena.OnCambiarContrasenaUserListener,
-        DialogoAgregarDonante.OnAgregarDonanteListener,
-        ListarDonantesAsync.OnListarDonantes, InsertarDonanteAsync.OnDonanteAgregado {
+        ListarDonantesAsync.OnListarDonantes, InsertarDonanteAsync.OnDonanteAgregado, RecyclerViewAdapter.OnEditarDonante {
 
     private SharedPreferences pref;
     private String username;
@@ -170,25 +169,6 @@ public class MainActivity extends AppCompatActivity
         return builder.create();
     }
 
-
-    @Override
-    public void AgregarDonante(Donantes donantes) {
-        /**
-         * Es el licener del boton agregar donantes*/
-
-        TextView textView = (TextView) findViewById(R.id.text);
-
-        textView.setText(
-                donantes.getDonante_ced() + "\n " +
-                        donantes.getDonante_nombre() + "\n " +
-                        donantes.getDonante_apellido() + "\n " +
-                        donantes.getDonante_edad() + "\n " +
-                        donantes.getDonante_grupo() + "\n " +
-                        donantes.getDonante_factor() + "\n " +
-                        donantes.getDonante_peso() + "\n " +
-                        donantes.getDonante_estatura());
-    }
-
     @Override
     public void ListarDonantes(List<Donantes> donantes) {
 
@@ -210,6 +190,19 @@ public class MainActivity extends AppCompatActivity
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
+        }
+
+    }
+
+    @Override
+    public void EditarDonante(Bundle args) {
+
+        if (args != null){
+
+            DialogoAgregarDonante dialogo = new DialogoAgregarDonante();
+            dialogo.setArguments(args);
+            dialogo.show(getSupportFragmentManager(), DialogoAgregarDonante.TAG);
+
         }
 
     }
