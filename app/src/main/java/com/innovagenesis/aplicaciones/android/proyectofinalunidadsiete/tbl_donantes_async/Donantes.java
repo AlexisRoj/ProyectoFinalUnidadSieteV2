@@ -31,6 +31,7 @@ public class Donantes implements Serializable{
                     String donante_factor,
                     int donante_peso,
                     int donante_estatura) {
+        //Constructor insertar
         this.donante_ced = donante_ced;
         this.donante_nombre = donante_nombre;
         this.donante_apellido = donante_apellido;
@@ -40,6 +41,26 @@ public class Donantes implements Serializable{
         this.donante_peso = donante_peso;
         this.donante_estatura = donante_estatura;
     }
+
+    public Donantes(String donante_nombre,
+                    String donante_apellido,
+                    int donante_edad,
+                    String donante_tipo,
+                    String donante_factor,
+                    int donante_peso,
+                    int donante_estatura) {
+        //Constructor editar
+        this.donante_nombre = donante_nombre;
+        this.donante_apellido = donante_apellido;
+        this.donante_edad = donante_edad;
+        this.donante_tipo = donante_tipo;
+        this.donante_factor = donante_factor;
+        this.donante_peso = donante_peso;
+        this.donante_estatura = donante_estatura;
+    }
+
+
+
 
     public int getDonante_ced() {
         return donante_ced;

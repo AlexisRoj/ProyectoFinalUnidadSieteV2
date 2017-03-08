@@ -3,6 +3,7 @@ package com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_dona
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.R;
@@ -27,7 +28,7 @@ public class ModificarDonanteAsync extends AsyncTask<URL,Integer,Boolean> {
     private ProgressDialog dialog;
     private Donantes donantes;
 
-    public ModificarDonanteAsync(Activity activity, Donantes donantes) {
+    public ModificarDonanteAsync(Donantes donantes, FragmentActivity activity) {
         this.activity = activity;
         this.donantes = donantes;
         dialog = new ProgressDialog(activity);

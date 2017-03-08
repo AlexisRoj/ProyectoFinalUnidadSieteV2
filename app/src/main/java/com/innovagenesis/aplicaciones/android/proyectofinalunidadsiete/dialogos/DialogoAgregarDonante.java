@@ -25,6 +25,7 @@ import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.R;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.preference.PreferenceConstant;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.Donantes;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.donantes_async.InsertarDonanteAsync;
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.donantes_async.ModificarDonanteAsync;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -287,6 +288,15 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
+                    }else{
+                        /** Modica el donante selecionado*/
+                        donantes = new Donantes(nombre, apellido, edad, grupo, factor, peso, estatura);
+                        try {
+                            new ModificarDonanteAsync(donantes,getActivity()).execute(
+                                    new URL(PreferenceConstant.URL_TBL_DONANTES + cedula));
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        }
                     }
                     dismiss();
                 }
@@ -325,6 +335,9 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
 
     private void mRellenarEdit(Spinner spGrupo, Spinner spFactor, Bundle args) {
         /** Encargado de instanciar todos los elementos con los argumentos */
+
+        cedula = args.getInt("cedula");
+
         editTextCed.setText(String.valueOf(args.getInt("cedula")));
         editTextNombre.setText(args.getString("nombre"));
         editTextApellido.setText(args.getString("apellido"));
@@ -340,7 +353,7 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
     private int getIndex (Spinner spinner, String myString){
         /** Recorre el spinner para realizar la seleccion*/
         int index = 0;
-        for (int i = 0; i < spinner.getCount(); i++) {
+        for (int i = 0; i <= spinner.getCount(); i++) {
             if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)) {
                 index = i;
                 break;

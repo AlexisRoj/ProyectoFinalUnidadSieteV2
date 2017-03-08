@@ -1,7 +1,6 @@
 package com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.adapter;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -13,14 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.R;
-import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.dialogos.DialogoAgregarDonante;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.preference.PreferenceConstant;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.Donantes;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.donantes_async.BorrarDonantesAsync;
 
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collections;
@@ -44,7 +40,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
         this.activity = activity;
         this.data = data;
         inflater = LayoutInflater.from(context);
-
         try {
             listener = (OnEditarDonante)activity;
         } catch (ClassCastException e) {
@@ -54,19 +49,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
 
 
     public interface OnEditarDonante {
-
         void EditarDonante (Bundle args);
     }
-
     private OnEditarDonante listener;
-
-
 
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View view = inflater.inflate(R.layout.template_item_donante,parent,false);
-
         return new RecyclerViewHolder(view);
     }
 
@@ -89,8 +78,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context,"Editar donante",Toast.LENGTH_SHORT).show();
-
 
                 String nombre,apellido,tipoSangre,factorSangre;
                 int idCedula,edad,peso, estatura;
@@ -104,7 +91,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
                 peso = current.donante_peso;
                 estatura = current.donante_estatura;
 
-
                 Bundle args = new Bundle();
 
                 args.putInt("cedula",idCedula);
@@ -115,12 +101,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
                 args.putString("factorSangre",factorSangre);
                 args.putInt("peso",peso);
                 args.putInt("estatura",estatura);
-
+                //Envia argumentos al activity
                 listener.EditarDonante(args);
-
             }
         });
-
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,9 +112,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
                 elimarDonante(holder,idDonanteBorrar).show();
             }
         });
-
     }
-
     @Override
     public int getItemCount() {
         return data.size();
@@ -147,15 +129,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
                                 int item = holder.getAdapterPosition();
-
                                 try {
                                     /** Remueve el donante de la base de datos*/
                                     new BorrarDonantesAsync(activity).execute(
                                             new URL(PreferenceConstant.URL_TBL_DONANTES
                                                     + idDonanteBorrar));
-
                                     /** Remuelve el elemento del recyclerView*/
                                     remoteDonanteRecycler(item);
                                 } catch (MalformedURLException e) {
