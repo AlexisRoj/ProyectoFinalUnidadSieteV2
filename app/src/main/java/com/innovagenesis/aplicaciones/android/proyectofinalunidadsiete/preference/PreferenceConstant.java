@@ -9,10 +9,12 @@ public class PreferenceConstant {
 
      /**
       * Acá se cambia la ip de todos los accesos al service, ojo debe mantener
-      * el formato completo la ip + el puerto ejemplo: 192.168.100.5:8080
+      * el formato completo la ip ejemplo: 192.168.100.5 + el puerto 8080
       * */
 
-    private static final String ip = "192.168.100.3:8080";
+
+    private static final String ip = "192.168.100.3";
+    private static final String puerto = "8080";
 
 
     public static final String PREFERENCE_LOGIN = "Inicio de Sección";
@@ -21,12 +23,11 @@ public class PreferenceConstant {
     public static final String USER_PREF = "false";
 
     public static final String URL_TBL_USERS =
-            "http://" + ip + "/WebServiceExamenSiete/webapi/Users/";
+            "http://" + ip + ":" + puerto + "/WebServiceExamenSiete/webapi/Users/";
 
     public static final String URL_TBL_DONANTES =
-            "http://" +ip + "/WebServiceExamenSiete/webapi/Donantes/";
+            "http://" +ip + ":" + puerto + "/WebServiceExamenSiete/webapi/Donantes/";
 
-    public static final String NOMBRE_ARCHIVO = "donantes.txt";
 
 
 }

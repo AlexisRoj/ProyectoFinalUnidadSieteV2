@@ -11,9 +11,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +38,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements DialogoCambiarContrasena.OnCambiarContrasenaUserListener,
-        ListarDonantesAsync.OnListarDonantes, InsertarDonanteAsync.OnDonanteAgregado, RecyclerViewAdapter.OnEditarDonante {
+        ListarDonantesAsync.OnListarDonantes, InsertarDonanteAsync.OnDonanteAgregado,
+        RecyclerViewAdapter.OnEditarDonante,DialogoAgregarDonante.OnResfrescarRecyclerView {
 
     private SharedPreferences pref;
     private String username;
@@ -52,6 +56,37 @@ public class MainActivity extends AppCompatActivity
         pref = getSharedPreferences(PreferenceConstant.PREFERENCE_LOGIN, MODE_PRIVATE);
         username = pref.getString(PreferenceConstant.USER_NAME, null);
 
+        final EditText editTextBuscar =(EditText)findViewById(R.id.edit_query);
+
+        editTextBuscar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                String dato = editTextBuscar.getText().toString();
+
+                /** Desplegar elementos del RecyclerView al iniciar **/
+                try {
+                    new ListarDonantesAsync(MainActivity.this).execute(
+                            new URL(PreferenceConstant.URL_TBL_DONANTES + dato));
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,14 +101,14 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
-
         /** Desplegar elementos del RecyclerView al iniciar **/
-
         try {
             new ListarDonantesAsync(this).execute(new URL(PreferenceConstant.URL_TBL_DONANTES));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+
+        this.setTitle(getString(R.string.donantes));
     }
 
     @Override
@@ -184,6 +219,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void DonanteAgregado(Boolean agregado) {
 
+        /** Refresca el recicler view*/
         if (agregado) {
             try {
                 new ListarDonantesAsync(this).execute(new URL(PreferenceConstant.URL_TBL_DONANTES));
@@ -203,6 +239,20 @@ public class MainActivity extends AppCompatActivity
             dialogo.setArguments(args);
             dialogo.show(getSupportFragmentManager(), DialogoAgregarDonante.TAG);
 
+        }
+
+    }
+
+    @Override
+    public void RefrescarRecyclerView(Boolean refrescar) {
+
+        /** Refresca el recicler view */
+        if (refrescar) {
+            try {
+                new ListarDonantesAsync(this).execute(new URL(PreferenceConstant.URL_TBL_DONANTES));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
         }
 
     }

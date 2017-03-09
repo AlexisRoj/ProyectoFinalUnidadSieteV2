@@ -16,22 +16,18 @@
 
     <EditText
         android:id="@+id/edit_query"
+        android:hint="@string/buscar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:drawableRight="@drawable/ic_search"
         android:drawableTint="@color/colorAccent"
-        android:hint="@string/buscar"
-        android:inputType="number|numberSigned"
-        android:padding="10dp" />
+        android:drawableRight="@drawable/ic_search"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:scrollbars="vertical"
-        tools:focusable="false">
+        android:scrollbars="vertical">
 
     </android.support.v7.widget.RecyclerView>
 </LinearLayout>

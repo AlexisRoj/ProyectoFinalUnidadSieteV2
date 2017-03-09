@@ -42,6 +42,9 @@
     <string name="tituloMensajeEliminarDonante">Eliminar donante</string>
     <string name="userActualizado">Usuario registrado correctamente</string>
     <string name="donantesActualizado">Los datos del donante han sido modificados</string>
+    <string name="actualizar">Actualizar</string>
+    <string name="buscar">Buscar</string>
+    <string name="donantes">Donantes</string>
 
 
     <string-array name="factor_sanguineo">

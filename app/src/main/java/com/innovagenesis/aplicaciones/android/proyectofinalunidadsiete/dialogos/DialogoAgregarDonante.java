@@ -68,6 +68,24 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
         //Constructor vacio
     }
 
+    public interface OnResfrescarRecyclerView{
+        void RefrescarRecyclerView (Boolean refrescar);
+    }
+
+    private OnResfrescarRecyclerView listener;
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            listener = (OnResfrescarRecyclerView)context;
+        } catch (Exception e) {
+            System.out.println("Interface no implementada");
+            e.printStackTrace();
+        }
+    }
 
     /********************************************************************************
      * *                               onCreateDialog                               **
@@ -210,6 +228,8 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
         Bundle args = getArguments();
         if (args != null) {
             nuevoDonante = false;
+            editTextCed.setFocusable(false);
+            btnAgregar.setText(R.string.actualizar);
             /** Metodo encargado de instanciar y asignar los valores de la ediccion*/
             mRellenarEdit(spGrupo, spFactor, args);
         }
@@ -241,7 +261,7 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
                 Boolean agregar = true;
                 mAsignaciones();
 
-                if (cedula == 0) {
+                if (cedula == 0 ) {
                     editTextCed.setError(getString(R.string.campoVacio));
                     agregar = false;
                 }
@@ -298,6 +318,8 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
                             e.printStackTrace();
                         }
                     }
+                    /** Listener para refrescar el reciclerView*/
+                    listener.RefrescarRecyclerView(true);
                     dismiss();
                 }
                 break;
@@ -313,22 +335,23 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
 
         /** Realiza la asignacion de los recursos a cada variable**/
 
-        if (texInputCed != null) {
+
+        if (!editTextCed.getText().toString().equals("")) {
             cedula = Integer.parseInt(editTextCed.getText().toString());
         }
-        if (textInputNombre.getEditText() != null) {
+        if (!editTextNombre.getText().toString().equals("")) {
             nombre = editTextNombre.getText().toString();
         }
-        if (textInputApellido.getEditText() != null) {
+        if (!editTextApellido.getText().toString().equals("")) {
             apellido = editTextApellido.getText().toString();
         }
-        if (textInputEdad.getEditText() != null) {
+        if (!editTextEdad.getText().toString().equals("")) {
             edad = Integer.parseInt(editTextEdad.getText().toString());
         }
-        if (textInputPeso.getEditText() != null) {
+        if (!editTextPeso.getText().toString().equals("")) {
             peso = Integer.parseInt(editTextPeso.getText().toString());
         }
-        if (textInputEstatura != null) {
+        if (!editTextEstatura.getText().toString().equals("")) {
             estatura = Integer.parseInt(editTextEstatura.getText().toString());
         }
     }
