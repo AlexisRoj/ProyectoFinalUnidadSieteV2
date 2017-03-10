@@ -7,13 +7,13 @@ package com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.preferen
 
 public class PreferenceConstant {
 
-     /**
-      * Acá se cambia la ip de todos los accesos al service, ojo debe mantener
-      * el formato completo la ip ejemplo: 192.168.100.5 + el puerto 8080
-      * */
+    /**
+     * Acá se cambia la ip de todos los accesos al service, ojo debe mantener
+     * el formato completo la ip ejemplo: 192.168.100.5 + el puerto 8080
+     */
 
 
-    private static final String ip = "192.168.100.3";
+    private static final String ip = "192.168.100.4";
     private static final String puerto = "8080";
 
 
@@ -26,8 +26,7 @@ public class PreferenceConstant {
             "http://" + ip + ":" + puerto + "/WebServiceExamenSiete/webapi/Users/";
 
     public static final String URL_TBL_DONANTES =
-            "http://" +ip + ":" + puerto + "/WebServiceExamenSiete/webapi/Donantes/";
-
+            "http://" + ip + ":" + puerto + "/WebServiceExamenSiete/webapi/Donantes/";
 
 
 }
