@@ -45,6 +45,7 @@
     <string name="actualizar">Actualizar</string>
     <string name="buscar">Buscar</string>
     <string name="donantes">Donantes</string>
+    <string name="existeDonante">Este donante ya existe en el sistem</string>
 
 
     <string-array name="factor_sanguineo">

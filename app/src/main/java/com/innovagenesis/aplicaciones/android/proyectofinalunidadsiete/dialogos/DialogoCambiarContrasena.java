@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -51,7 +52,7 @@ public class DialogoCambiarContrasena extends DialogFragment {
         builder.setView(view);/** Edit Text del Dialogo*/
         TextView textView = (TextView) view.findViewById(R.id.dialogoTitulo);
 
-        final EditText oontrasenaActual = (EditText) view.findViewById(R.id.dialogoCampo1);
+        final EditText contrasenaActual = (EditText) view.findViewById(R.id.dialogoCampo1);
         final EditText nuevaContrasena = (EditText) view.findViewById(R.id.dialogoCampo2);
         final EditText RepitaContrasena = (EditText) view.findViewById(R.id.dialogoCampo3);
 
@@ -64,7 +65,7 @@ public class DialogoCambiarContrasena extends DialogFragment {
 
         textView.setText(getString(R.string.cambiar_contrasena));
 
-        oontrasenaActual.setHint(getString(R.string.contrasena_actual));
+        contrasenaActual.setHint(getString(R.string.contrasena_actual));
         nuevaContrasena.setHint(getString(R.string.nueva_contrasena));
         RepitaContrasena.setHint(getString(R.string.repetir_contrasena));
 
@@ -73,6 +74,9 @@ public class DialogoCambiarContrasena extends DialogFragment {
 
 
         preference = getContext().getSharedPreferences(PreferenceConstant.PREFERENCE_LOGIN, MODE_PRIVATE);
+
+        /** Convierte el texto a pass*/
+        contrasenaActual.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
         /** Cargar preferencias para hacer el login*/
         user_name = preference.getString(PreferenceConstant.USER_NAME, null);
@@ -85,7 +89,7 @@ public class DialogoCambiarContrasena extends DialogFragment {
             public void onClick(View v) {
 
 
-                final String actual = oontrasenaActual.getText().toString();
+                final String actual = contrasenaActual.getText().toString();
                 final String nueva = nuevaContrasena.getText().toString();
                 final String confirmarNueva = RepitaContrasena.getText().toString();
 
@@ -94,9 +98,14 @@ public class DialogoCambiarContrasena extends DialogFragment {
                     if (nueva.equals(confirmarNueva)) {
                         listener.CambiarContrasenaUser(user_name, nueva);
                     } else
-                        Toast.makeText(getContext(), "No coinciden las contraseñas", Toast.LENGTH_LONG).show();
-                } else
-                    Toast.makeText(getContext(), "No coincide la contraseña actual", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "No coinciden las contraseñas \n" +
+                                user_pass + "-" + actual + "-" + nueva + "-" + confirmarNueva
+                                , Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), "No coincide la contraseña actual \n" +
+                            user_pass + "-" + actual + "-" + nueva + "-" + confirmarNueva,
+                            Toast.LENGTH_LONG).show();
+                }
             }
         });
 

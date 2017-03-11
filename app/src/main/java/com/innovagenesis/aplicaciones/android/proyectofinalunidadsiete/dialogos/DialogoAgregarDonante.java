@@ -68,8 +68,10 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
         //Constructor vacio
     }
 
-    public interface OnResfrescarRecyclerView{
-        void RefrescarRecyclerView (Boolean refrescar);
+    public interface OnResfrescarRecyclerView {
+        void RefrescarRecyclerView(Boolean refrescar);
+
+        void ValidarDonante(Donantes donantes);
     }
 
     private OnResfrescarRecyclerView listener;
@@ -80,7 +82,7 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
         super.onAttach(context);
 
         try {
-            listener = (OnResfrescarRecyclerView)context;
+            listener = (OnResfrescarRecyclerView) context;
         } catch (Exception e) {
             System.out.println("Interface no implementada");
             e.printStackTrace();
@@ -261,7 +263,7 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
                 Boolean agregar = true;
                 mAsignaciones();
 
-                if (cedula == 0 ) {
+                if (cedula == 0) {
                     editTextCed.setError(getString(R.string.campoVacio));
                     agregar = false;
                 }
@@ -295,32 +297,35 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
                     editTextEstatura.setError(getString(R.string.campoVacio));
                     agregar = false;
                 }
+
+                /**************************************************************/
+
+                agregar = true;
+
+                /**************************************************************/
+
+
                 if (agregar) {
                     /** Agregar es una validacion para los campos que no se encuentren vacios**/
                     if (nuevoDonante) {
                         /** Separa si una inserccion nueva o es una modificacion*/
                         donantes = new Donantes(cedula, nombre, apellido, edad, grupo, factor, peso, estatura);
-                        try {
-                            /** Seccion encargada de almacenar el donante*/
-                            new InsertarDonanteAsync(donantes, getActivity()).execute(
-                                    new URL(PreferenceConstant.URL_TBL_DONANTES));
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }else{
+                        listener.ValidarDonante(donantes);
+                        dismiss();
+                    } else {
                         /** Modica el donante selecionado*/
                         donantes = new Donantes(nombre, apellido, edad, grupo, factor, peso, estatura);
                         try {
-                            new ModificarDonanteAsync(donantes,getActivity()).execute(
+                            new ModificarDonanteAsync(donantes, getActivity()).execute(
                                     new URL(PreferenceConstant.URL_TBL_DONANTES + cedula));
+                            dismiss();
                         } catch (MalformedURLException e) {
                             e.printStackTrace();
                         }
                     }
                     /** Listener para refrescar el reciclerView*/
                     listener.RefrescarRecyclerView(true);
-                    dismiss();
+
                 }
                 break;
             }
@@ -373,7 +378,7 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
     }
 
     //private method of your class
-    private int getIndex (Spinner spinner, String myString){
+    private int getIndex(Spinner spinner, String myString) {
         /** Recorre el spinner para realizar la seleccion*/
         int index = 0;
         for (int i = 0; i <= spinner.getCount(); i++) {

@@ -2,10 +2,12 @@ package com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_user
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.R;
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.preference.PreferenceConstant;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +29,7 @@ public class InsertarLoginAsync extends AsyncTask<URL, Integer, Boolean> {
     private String username;
     private String userpass;
 
+    private SharedPreferences pref;
 
 
     public InsertarLoginAsync(Activity activity, String username,
@@ -36,6 +39,8 @@ public class InsertarLoginAsync extends AsyncTask<URL, Integer, Boolean> {
         this.activity = activity;
         this.username = username;
         this.userpass = userpass;
+
+
     }
 
     @Override
@@ -81,6 +86,13 @@ public class InsertarLoginAsync extends AsyncTask<URL, Integer, Boolean> {
 
         if (bool) {
             Toast.makeText(activity, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show();
+            SharedPreferences.Editor edit = pref.edit();
+
+            /** Graba las preferencias */
+            edit.putString(PreferenceConstant.USER_NAME, username);
+            edit.putString(PreferenceConstant.USER_PASS, userpass);
+            edit.apply();
+
             activity.closeContextMenu();
         }
 

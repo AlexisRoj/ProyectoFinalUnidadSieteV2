@@ -27,11 +27,13 @@ import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.dialogos.
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.dialogos.DialogoCrearUsuario;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.preference.PreferenceConstant;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.adapter.RecyclerViewAdapter;
+import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.donantes_async.BuscarDonanteAsync;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.donantes_async.InsertarDonanteAsync;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_donantes_async.donantes_async.ListarDonantesAsync;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_users_async.BorrarUserAsync;
 import com.innovagenesis.aplicaciones.android.proyectofinalunidadsiete.tbl_users_async.ActualizarUserAsync;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -39,12 +41,11 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements DialogoCambiarContrasena.OnCambiarContrasenaUserListener,
         ListarDonantesAsync.OnListarDonantes, InsertarDonanteAsync.OnDonanteAgregado,
-        RecyclerViewAdapter.OnEditarDonante,DialogoAgregarDonante.OnResfrescarRecyclerView {
+        RecyclerViewAdapter.OnEditarDonante, DialogoAgregarDonante.OnResfrescarRecyclerView, BuscarDonanteAsync.OnDonanteEncontrado {
 
     private SharedPreferences pref;
     private String username;
-    private RecyclerView recyclerView;
-    private RecyclerViewAdapter adapter;
+    private Donantes globalDonantes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity
         pref = getSharedPreferences(PreferenceConstant.PREFERENCE_LOGIN, MODE_PRIVATE);
         username = pref.getString(PreferenceConstant.USER_NAME, null);
 
-        final EditText editTextBuscar =(EditText)findViewById(R.id.edit_query);
+        final EditText editTextBuscar = (EditText) findViewById(R.id.edit_query);
 
         editTextBuscar.addTextChangedListener(new TextWatcher() {
             @Override
@@ -84,7 +85,6 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
-
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity
         }
         if (id == R.id.action_cambiarPass) {
             DialogoCambiarContrasena dialogo = new DialogoCambiarContrasena();
-            dialogo.show(getSupportFragmentManager(), DialogoCrearUsuario.TAG);
+            dialogo.show(getSupportFragmentManager(), DialogoCambiarContrasena.TAG);
         }
 
         if (id == R.id.action_eliminar_cuenta) {
@@ -206,9 +206,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void ListarDonantes(List<Donantes> donantes) {
-
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        adapter = new RecyclerViewAdapter(this, MainActivity.this, donantes);
+        /** Llena el recyclerView en activity*/
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, MainActivity.this, donantes);
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -233,7 +233,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void EditarDonante(Bundle args) {
 
-        if (args != null){
+        if (args != null) {
 
             DialogoAgregarDonante dialogo = new DialogoAgregarDonante();
             dialogo.setArguments(args);
@@ -256,4 +256,58 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
+
+    @Override
+    public void ValidarDonante(Donantes donantes) {
+
+         globalDonantes = donantes;
+
+        try {
+
+            Toast.makeText(this, globalDonantes.donante_nombre, Toast.LENGTH_SHORT).show();
+
+            new BuscarDonanteAsync(this, globalDonantes.donante_ced).execute(
+                    new URL(PreferenceConstant.URL_TBL_DONANTES + globalDonantes.donante_ced));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    @Override
+    public void UsuarioEncontrado(Boolean existe) {
+        /** Valida si el donante existe antes de ser agregado*/
+        //test
+        if (existe) {
+            /** Si el donante existe no lo deja ingresar*/
+            Toast.makeText(this, R.string.existeDonante, Toast.LENGTH_SHORT).show();
+        } else {
+            /** Seccion encargada de almacenar el donante*/
+            try {
+
+                Toast.makeText(this, globalDonantes.donante_nombre, Toast.LENGTH_SHORT).show();
+
+                new InsertarDonanteAsync(globalDonantes, this).execute(new URL(PreferenceConstant.URL_TBL_DONANTES));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
 }
+
+/*
+
+try {
+        */
+/**
+ * Seccion encargada de almacenar el donante
+ *//*
+
+        new InsertarDonanteAsync(donantes, getActivity()).execute(
+        new URL(PreferenceConstant.URL_TBL_DONANTES));
+
+        } catch (IOException e) {
+        e.printStackTrace();
+        }*/
