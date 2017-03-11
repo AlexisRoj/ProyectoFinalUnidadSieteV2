@@ -300,7 +300,7 @@ public class DialogoAgregarDonante extends DialogFragment implements View.OnClic
 
                 /**************************************************************/
 
-                agregar = true;
+                //agregar = true; // Se utliza para pruebas que pase directo sin validar
 
                 /**************************************************************/
 

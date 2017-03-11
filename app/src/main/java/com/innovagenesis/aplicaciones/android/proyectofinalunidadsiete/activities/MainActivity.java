@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity
         final EditText editTextBuscar = (EditText) findViewById(R.id.edit_query);
 
         editTextBuscar.addTextChangedListener(new TextWatcher() {
+
+            /** Listener del editText*/
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -77,7 +79,6 @@ public class MainActivity extends AppCompatActivity
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
@@ -126,15 +127,17 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.action_close_pref) {
+            /** Borrar preferencias, cerrar seccion*/
             borrarPreference();
         }
         if (id == R.id.action_cambiarPass) {
+            /** Menu cambiar contraseña*/
             DialogoCambiarContrasena dialogo = new DialogoCambiarContrasena();
             dialogo.show(getSupportFragmentManager(), DialogoCambiarContrasena.TAG);
         }
 
         if (id == R.id.action_eliminar_cuenta) {
-
+            /** Eliminar cuenta*/
             createSimpleDialog().show();
 
         }
@@ -234,7 +237,7 @@ public class MainActivity extends AppCompatActivity
     public void EditarDonante(Bundle args) {
 
         if (args != null) {
-
+            /** Crea el dialog de editar el donante*/
             DialogoAgregarDonante dialogo = new DialogoAgregarDonante();
             dialogo.setArguments(args);
             dialogo.show(getSupportFragmentManager(), DialogoAgregarDonante.TAG);
@@ -260,12 +263,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void ValidarDonante(Donantes donantes) {
 
-         globalDonantes = donantes;
+        globalDonantes = donantes;
 
         try {
-
-            Toast.makeText(this, globalDonantes.donante_nombre, Toast.LENGTH_SHORT).show();
-
+            /** Valida si el donante existe antes de ser ingresado*/
             new BuscarDonanteAsync(this, globalDonantes.donante_ced).execute(
                     new URL(PreferenceConstant.URL_TBL_DONANTES + globalDonantes.donante_ced));
         } catch (MalformedURLException e) {
@@ -285,9 +286,6 @@ public class MainActivity extends AppCompatActivity
         } else {
             /** Seccion encargada de almacenar el donante*/
             try {
-
-                Toast.makeText(this, globalDonantes.donante_nombre, Toast.LENGTH_SHORT).show();
-
                 new InsertarDonanteAsync(globalDonantes, this).execute(new URL(PreferenceConstant.URL_TBL_DONANTES));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -297,17 +295,3 @@ public class MainActivity extends AppCompatActivity
     }
 }
 
-/*
-
-try {
-        */
-/**
- * Seccion encargada de almacenar el donante
- *//*
-
-        new InsertarDonanteAsync(donantes, getActivity()).execute(
-        new URL(PreferenceConstant.URL_TBL_DONANTES));
-
-        } catch (IOException e) {
-        e.printStackTrace();
-        }*/
