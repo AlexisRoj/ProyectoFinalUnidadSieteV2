@@ -221,7 +221,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener,
 
             try {
                 /** Ingresa el usuario y carga la activity*/
-                new InsertarLoginAsync(this, usernameInsertar, userpassInsertar)
+                new InsertarLoginAsync(this, usernameInsertar, userpassInsertar, pref)
                         .execute(new
                                 URL(PreferenceConstant.URL_TBL_USERS));
                 cargarActivity();

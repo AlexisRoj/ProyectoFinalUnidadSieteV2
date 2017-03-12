@@ -33,14 +33,14 @@ public class InsertarLoginAsync extends AsyncTask<URL, Integer, Boolean> {
 
 
     public InsertarLoginAsync(Activity activity, String username,
-                              String userpass) {
+                              String userpass, SharedPreferences pref) {
         /**Constructor, recibe los parametros del dialog*/
         dialogo = new ProgressDialog(activity);
         this.activity = activity;
         this.username = username;
         this.userpass = userpass;
 
-
+        this.pref = pref;
     }
 
     @Override
@@ -85,13 +85,14 @@ public class InsertarLoginAsync extends AsyncTask<URL, Integer, Boolean> {
         super.onPostExecute(bool);
 
         if (bool) {
-            Toast.makeText(activity, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show();
+
             SharedPreferences.Editor edit = pref.edit();
 
             /** Graba las preferencias */
             edit.putString(PreferenceConstant.USER_NAME, username);
             edit.putString(PreferenceConstant.USER_PASS, userpass);
             edit.apply();
+            Toast.makeText(activity, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show();
 
             activity.closeContextMenu();
         }
